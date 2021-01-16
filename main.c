@@ -3,7 +3,7 @@
 
 #define MAXSTRING 100
 #define MAXCONTACTS 1000
-#define FILENAME "phonebook.txt"
+#define FILENAME "phonfebook.txt"
 
 // Structures
 typedef struct BirthDate
@@ -37,11 +37,33 @@ void modify();
 void print();
 void save();
 void quit();
+void red();
+void green();
+void reset();
+
+void clearScreen()
+{
+    system("@cls||clear");
+}
 
 int main()
 {
     load();
     print();
+}
+void red()
+{
+    printf("\033[1;31m");
+}
+
+void green()
+{
+    printf("\033[0;32m");
+}
+
+void reset()
+{
+    printf("\033[0m");
 }
 
 void load()
@@ -50,7 +72,12 @@ void load()
     f = fopen(FILENAME, "r");
     if (f == NULL)
     {
-        printf("Error! Invalid filename");
+        void red();
+        printf("Error! Invalid filename\n");
+        void reset();
+        void green();
+        printf("Error! Invalid filename\n");
+        void reset();
         exit(1);
     }
 
@@ -72,17 +99,20 @@ void load()
 
 void print()
 {
-    printf("| Last Name |\tFirst Name |\tDate |\tAddress |\tNumber |\tEmail |\n");
+    printf("Last, First, Date, Address, Number, Email\n");
     for (int i = 0; i < contactCount; i++)
     {
-        printf("%s\r", contacts[i].lastName);
-        printf("%s\r", contacts[i].firstName);
-        printf("%d-%d-%d\r",
+        printf("%s, ", contacts[i].lastName);
+        printf("%s, ", contacts[i].firstName);
+        printf("%d-%d-%d, ",
                contacts[i].date.day,
                contacts[i].date.month,
                contacts[i].date.year);
-        printf("%s\r", contacts[i].address);
-        printf("%d\r", contacts[i].number);
-        printf("%s\r", contacts[i].email);
+        printf("%s, ", contacts[i].address);
+        printf("%d, ", contacts[i].number);
+        printf("%s\n", contacts[i].email);
+        if (i < 4)
+            clearScreen();
     }
 }
+
