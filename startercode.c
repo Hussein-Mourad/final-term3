@@ -22,7 +22,7 @@ typedef struct Contact
     char lastName[MAXSTRING];
     BirthDate date;
     char address[MAXSTRING];
-    int number;
+    unsigned long long number; // %llu
     char email[MAXSTRING];
 
 } Contact;
