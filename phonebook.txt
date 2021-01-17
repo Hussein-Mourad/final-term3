@@ -1,10 +1,2 @@
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Kassem,Hussein,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Nouh,Ahmed,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
-Steven,Thomas,10-06-1995,26 Elhoreya Street,01234567899,sthomas@gmail.com
+Steven,Thomas,10-6-1995,26 Elhoreya Street,1234567899,sthomas@gmail.com
+Kassem,Hussein,11-6-1995,26 Elhoreya Street,123,gfg4567899,sddfomas@gmail.com
