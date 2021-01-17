@@ -4,7 +4,7 @@ To get started:
 
 ```bash
 
-git clone github.com/Hussein-Mourad/tree/main/final-term3;
+git clone https://github.com/Hussein-Mourad/final-term3/tree/main;
 
 # To commit your work
 
