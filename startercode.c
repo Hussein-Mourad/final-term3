@@ -58,7 +58,7 @@ void clearScreen();
 
 int main()
 {
-    error("TODO");
+    error("TODO\n");
 }
 
 void load()
