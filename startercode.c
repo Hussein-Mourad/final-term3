@@ -5,6 +5,7 @@
 #include <string.h>
 
 #define MAXSTRING 100
+#define MAXNUMBER 15 // max phone number
 #define MAXCONTACTS 1000
 #define FILENAME "phonebook.txt"
 
@@ -22,7 +23,7 @@ typedef struct Contact
     char lastName[MAXSTRING];
     BirthDate date;
     char address[MAXSTRING];
-    unsigned long long number; // %llu
+    char number[MAXNUMBER];
     char email[MAXSTRING];
 
 } Contact;
@@ -35,8 +36,6 @@ int Count = 0;
 // Used for iteration
 int i = 0;
 int j = 0;
-// Used to render menu
-bool isFuncRunning = false;
 
 // Prototypes
 void load();
@@ -54,7 +53,7 @@ void sortByLastName();
 void sortByDate();
 void error(char message[]);
 void success(char message[]);
-void clearScreen();
+
 
 int main()
 {
@@ -122,10 +121,6 @@ void error(char message[])
 void success(char message[])
 {
     printf("\033[0;32m%s\033[0m", message);
-}
-void clearScreen()
-{
-    system("@cls||clear");
 }
 
 //! TODO REPORT
