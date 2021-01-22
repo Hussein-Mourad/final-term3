@@ -90,6 +90,7 @@ void load()
 
 void query()
 {
+    bool found = false;
     char searchTerm[MAXSTRING];
     printf("Enter the last name of the person: ");
     scanf("%s", searchTerm);
@@ -107,7 +108,12 @@ void query()
             printf("%s, ", contacts[i].address);
             printf("%s, ", contacts[i].number);
             printf("%s\n", contacts[i].email);
+            found = true;
         }
+    }
+    if (!found)
+    {
+        printf("No person found! \n");
     }
 }
 
