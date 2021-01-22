@@ -19,4 +19,8 @@ git push;
 
 git pull;
 
+# To initialize a new repo
+
+git init;
+
 ```
