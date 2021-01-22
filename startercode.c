@@ -113,7 +113,7 @@ void query()
     }
     if (!found)
     {
-        printf("No person found! \n");
+        error("No person found!\n");
     }
 }
 
