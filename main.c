@@ -83,8 +83,6 @@ bool compareDates(BirthDate date1, BirthDate date2)
     return false;
 }
 
-
-
 /* Function to print an array */
 void printDates(BirthDate arr[], int size)
 {
@@ -115,8 +113,14 @@ int main()
         // Last i elements are already in place
         for (j = 0; j < n - i - 1; j++)
         {
-            if (compareDates(arr[j], arr[j+1]))
-                swapDates(arr, j, j + 1);
+            if (compareDates(arr[j], arr[j + 1]))
+            {
+                BirthDate temp;
+                temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+            swapDates(arr, j, j + 1);
         }
     }
     printDates(arr, n);
@@ -354,8 +358,6 @@ void sortByDate()
         dates[i].month = contacts[i].date.month;
         dates[i].year = contacts[i].date.year;
     }
-
-
 }
 
 int getCurrentYear()
