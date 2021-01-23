@@ -44,6 +44,10 @@ void sortByDate();
 void error(char message[]);
 void success(char message[]);
 void pause();
+int getCurrentYear();
+bool validDate(char date[]);
+bool validPhone(char num[]);
+bool validEmail(char email[]);
 
 // Global Variables:
 // Stores the contacts
@@ -119,7 +123,44 @@ void query()
 
 void add()
 {
-    error("TODO\n");
+    char input[1];
+    char date[12];
+
+    printf("Enter Last Name: ");
+    scanf("%99s", contacts[Count].lastName);
+    printf("Enter First Name: ");
+    scanf("%99s", contacts[Count].firstName);
+    printf("Enter address: ");
+    fgets(contacts[Count].address, MAXSTRING, stdin);
+    scanf("%99[^\n]%*c", contacts[Count].address);
+    do
+    {
+        printf("Enter Birth Day (dd-mm-yyyy): ");
+        scanf("%s", date);
+    } while (!validDate(date));
+
+    do
+    {
+        printf("Enter phone number: ");
+        scanf("%15s", contacts[Count].number);
+    } while (!validPhone(contacts[Count].number));
+
+    do
+    {
+        printf("Enter email: ");
+        scanf("%100s", contacts[Count].email);
+    } while (!validEmail(contacts[Count].email));
+
+    Count++;
+    printContacts();
+    success("\nContact added successfully.");
+    printf("\nDo you want to add another one? (y/n) ");
+    scanf("%s", input);
+    if (strcmp(input, "y") != 0 && strcmp(input, "n") != 0)
+        printf("\nError! Unexpected input %s.\n", input);
+
+    if (strcmp(input, "y") == 0)
+        add();
 }
 
 void deleteContact()
@@ -228,7 +269,6 @@ void menu()
         break;
     }
 }
-
 void sortByLastName()
 {
     error("TODO\n");
@@ -238,6 +278,118 @@ void sortByDate()
 {
     error("TODO\n");
 }
+
+int getCurrentYear()
+{
+    time_t s;
+    struct tm *currentTime;
+    int CURRENTYEAR;
+    s = time(NULL);
+    currentTime = localtime(&s);
+    CURRENTYEAR = currentTime->tm_year + 1900;
+    return CURRENTYEAR;
+}
+
+bool validDate(char date[])
+{
+    long int dateLength = strlen(date); // stores the length of date
+    int dashCount = 0;
+    char *token;
+    int day, month, year;
+
+    if (dateLength < 8 || dateLength > 10)
+    {
+        error("Error! Invalid Date entry.\n");
+        return false;
+    }
+    for (i = 0; i < dateLength; i++)
+    {
+        if (date[i] == '-')
+            dashCount++;
+    }
+
+    if (dashCount != 2)
+    {
+        error("Invalid Date format!\n");
+        return false;
+    }
+
+    token = strtok(date, "-");
+    day = atoi(token);
+    // Converts date as string to day, month , year as int
+    for (i = 0; i <= 3; i++)
+    {
+        if (i == 1)
+            month = atoi(token);
+        else if (i == 2)
+            year = atoi(token);
+        token = strtok(NULL, "-");
+    }
+
+    if (day > 0 && day <= 31 && month > 0 && month <= 12 && year <= getCurrentYear() && year >= 1900)
+    {
+        // handles feb
+        if (month == 2 && day > 29)
+        {
+            error("Error! Invalid Date entry.\n");
+            return false;
+        }
+        //handle months which has only 30 days
+        if ((month == 4 || month == 6 ||
+             month == 9 || month == 11) &&
+            (day > 30))
+        {
+            error("Error! Invalid Date entry.\n");
+            return false;
+        }
+    }
+    else
+    {
+        error("Error! Invalid Date entry.\n");
+        return false;
+    }
+
+    contacts[Count].date.day = day;
+    contacts[Count].date.month = month;
+    contacts[Count].date.year = year;
+    return true;
+}
+
+bool validPhone(char num[])
+{
+
+    for (i = 0; i < strlen(num); i++)
+    {
+        if (isalpha(num[i]) || strlen(num) < 11)
+        {
+            error("Error! Invalid phone number.");
+            printf(" (phone number must be at least 11 digits and doesn't contain characters)\n");
+            return false;
+        }
+    }
+    return true;
+}
+
+bool validEmail(char email[])
+{
+    int emailLength = strlen(email);
+    for (i = 0; i <= emailLength; i++)
+    {
+        if (i != 0 && email[i] == '@' && i != emailLength - 1)
+        {
+            for (j = i; j <= emailLength; j++)
+            {
+                if (j != i && email[j] == '.' && j != emailLength - 1)
+                    return true;
+            }
+        }
+    }
+
+    error("Error! Invalid email address.");
+    printf(" (Email must contain @ sign and domain name)\n");
+    return false;
+}
+
 
 void error(char message[])
 {
