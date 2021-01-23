@@ -169,7 +169,7 @@ void add()
 
 void deleteContact()
 {
-    error("TODO   \n");
+    error("TODO\n");
 }
 
 void modify()
