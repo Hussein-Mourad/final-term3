@@ -35,7 +35,7 @@ void query();
 void add();
 void deleteContact();
 void modify();
-void printContacts();
+void printMenu();
 void save();
 void quit();
 void menu();
@@ -46,6 +46,7 @@ void error(char message[]);
 void success(char message[]);
 void pause();
 int getCurrentYear();
+void printContacts(Contact arr[]);
 bool validDate(char date[]);
 bool validPhone(char num[]);
 bool validEmail(char email[]);
@@ -64,10 +65,8 @@ int k = 0;
 int main()
 {
     load();
-    //     while (true)
-    //         menu();
-
-    printContacts();
+    while (true)
+        menu();
 }
 
 void load()
@@ -89,8 +88,8 @@ void load()
                &contacts[Count].date.month,
                &contacts[Count].date.year);
         fscanf(f, "%100[^,],", contacts[Count].address);
-        fscanf(f, "%15s,", contacts[Count].number);
-        fscanf(f, "%s\n", contacts[Count].email);
+        fscanf(f, "%15[^,],", contacts[Count].number);
+        fscanf(f, "%100s\n", contacts[Count].email);
         Count++;
     }
     fclose(f);
@@ -178,20 +177,40 @@ void modify()
     error("TODO\n");
 }
 
-void printContacts()
+void printMenu()
 {
-    printf("Last, First, Date, Address, Number, Email\n");
-    for (i = 0; i < Count; i++)
+    char input[10];
+    char menuItems[3][MAXSTRING] = {"Normal", "Sort by last name.", "Sort by date of birth."};
+    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
+
+    printf("\nChoose an option:\n");
+    for (i = 0; i < menuSize; i++)
+        printf("(%d)  %s\n", (i + 1), menuItems[i]);
+    scanf("%s", input);
+
+    if (atoi(input) == 0)
     {
-        printf("%s, ", contacts[i].lastName);
-        printf("%s, ", contacts[i].firstName);
-        printf("%d-%d-%d, ",
-               contacts[i].date.day,
-               contacts[i].date.month,
-               contacts[i].date.year);
-        printf("%s, ", contacts[i].address);
-        printf("%s, ", contacts[i].number);
-        printf("%s\n", contacts[i].email);
+        printf("Error! Unexpected input. ");
+        pause();
+    }
+
+    switch (atoi(input))
+    {
+    case 1:
+        printContacts(contacts);
+        break;
+    case 2:
+        sortByLastName();
+        break;
+    case 3:
+        sortByDate();
+        break;
+
+    default:
+        printf("\nError! Unexpected input. \n");
+        pause();
+        printMenu();
+        break;
     }
 }
 
@@ -235,8 +254,9 @@ void menu()
     system("@cls||clear"); // clears the screen
     char input[10];
     char menuItems[8][MAXSTRING] = {"Query", "Add", "Delete", "Modify", "Print", "About", "Save", "Exit"};
-    printf("\nChoose an item from the menu below:\n");
-    for (i = 0; i < 8; i++)
+    int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
+    printf("\nChoose an option from the menu below:\n");
+    for (i = 0; i < menuSize; i++)
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
 
@@ -265,11 +285,11 @@ void menu()
         pause();
         break;
     case 5:
-        printContacts();
+        printMenu();
         pause();
         break;
     case 6:
-        error("TODO\n");
+        printf("\nMade with \u2764 by:\nHussein Mourad Kassem-6729\nAhmed Said Nouh-7086\nMohab Ayman-xxxx\nAbdelrahman Elsayed-xxxx\n");
         pause();
         break;
     case 7:
@@ -286,6 +306,25 @@ void menu()
         break;
     }
 }
+
+void printContacts(Contact arr[])
+{
+    printf("\n(Last,First,Date,Address,Number,Email)\n");
+
+    for (i = 0; i < Count; i++)
+    {
+        printf("%s,%s,%d-%d-%d,%s,%s,%s\n",
+               arr[i].lastName,
+               arr[i].firstName,
+               arr[i].date.day,
+               arr[i].date.month,
+               arr[i].date.year,
+               arr[i].address,
+               arr[i].number,
+               arr[i].email);
+    }
+}
+
 void sortByLastName()
 {
     error("TODO\n");
@@ -311,6 +350,7 @@ void sortByDate()
 
     for (i = 0; i < Count; i++)
         arr[i] = contacts[i];
+
     for (i = 0; i < Count - 1; i++)
     {
         // Last i elements are already in place
@@ -326,19 +366,7 @@ void sortByDate()
         }
     }
 
-    printf("\n\n");
-    for (i = 0; i < Count; i++)
-    {
-        printf("%s, ", arr[i].lastName);
-        printf("%s, ", arr[i].firstName);
-        printf("%d-%d-%d, ",
-               arr[i].date.day,
-               arr[i].date.month,
-               arr[i].date.year);
-        printf("%s, ", arr[i].address);
-        printf("%s, ", arr[i].number);
-        printf("%s\n", arr[i].email);
-    }
+    printContacts(arr);
 }
 
 int getCurrentYear()
