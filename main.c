@@ -41,6 +41,7 @@ void quit();
 void menu();
 void sortByLastName();
 void sortByDate();
+
 void error(char message[]);
 void success(char message[]);
 void pause();
@@ -59,11 +60,67 @@ int i = 0;
 int j = 0;
 int k = 0;
 
+void swapDates(BirthDate arr[], int row1, int row2)
+{
+    BirthDate temp;
+    temp = arr[row1];
+    arr[row1] = arr[row2];
+    arr[row2] = temp;
+}
+
+bool compareDates(BirthDate date1, BirthDate date2)
+{
+    // All cases when true should be returned
+    if (date1.year > date2.year)
+        return true;
+    if (date1.year == date2.year && date1.month > date2.month)
+        return true;
+    if (date1.year == date2.year && date1.month == date2.month &&
+        date1.day > date2.day)
+        return true;
+
+    // If none of the above cases satisfy, return false
+    return false;
+}
+
+
+
+/* Function to print an array */
+void printDates(BirthDate arr[], int size)
+{
+    for (i = 0; i < size; i++)
+        printf("%d-%d-%d\n", arr[i].day, arr[i].month, arr[i].year);
+}
+
 int main()
 {
     load();
-    while (true)
-        menu();
+    //     while (true)
+    //         menu();
+
+    // int arr[] = {64, 34, 25, 12, 22, 11, 90};
+    BirthDate arr[] = {{20, 1, 2014},
+                       {25, 3, 2010},
+                       {3, 12, 1676},
+                       {18, 11, 1982},
+                       {19, 4, 2015},
+                       {9, 7, 2015}};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printDates(arr, n);
+    printf("Swapped:\n");
+    for (i = 0; i < n - 1; i++)
+    {
+
+        // Last i elements are already in place
+        for (j = 0; j < n - i - 1; j++)
+        {
+            if (compareDates(arr[j], arr[j+1]))
+                swapDates(arr, j, j + 1);
+        }
+    }
+    printDates(arr, n);
+    // return 0;
 }
 
 void load()
@@ -152,10 +209,11 @@ void add()
     } while (!validEmail(contacts[Count].email));
 
     Count++;
-    printContacts();
     success("\nContact added successfully.");
+
     printf("\nDo you want to add another one? (y/n) ");
     scanf("%s", input);
+
     if (strcmp(input, "y") != 0 && strcmp(input, "n") != 0)
         printf("\nError! Unexpected input %s.\n", input);
 
@@ -175,7 +233,19 @@ void modify()
 
 void printContacts()
 {
-    error("TODO\n");
+    printf("Last, First, Date, Address, Number, Email\n");
+    for (i = 0; i < Count; i++)
+    {
+        printf("%s, ", contacts[i].lastName);
+        printf("%s, ", contacts[i].firstName);
+        printf("%d-%d-%d, ",
+               contacts[i].date.day,
+               contacts[i].date.month,
+               contacts[i].date.year);
+        printf("%s, ", contacts[i].address);
+        printf("%s, ", contacts[i].number);
+        printf("%s\n", contacts[i].email);
+    }
 }
 
 void save()
@@ -276,7 +346,16 @@ void sortByLastName()
 
 void sortByDate()
 {
-    error("TODO\n");
+    BirthDate dates[MAXCONTACTS];
+
+    for (i = 0; i < Count; i++)
+    {
+        dates[i].day = contacts[i].date.day;
+        dates[i].month = contacts[i].date.month;
+        dates[i].year = contacts[i].date.year;
+    }
+
+
 }
 
 int getCurrentYear()
@@ -389,7 +468,6 @@ bool validEmail(char email[])
     printf(" (Email must contain @ sign and domain name)\n");
     return false;
 }
-
 
 void error(char message[])
 {
