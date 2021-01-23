@@ -49,6 +49,7 @@ int getCurrentYear();
 bool validDate(char date[]);
 bool validPhone(char num[]);
 bool validEmail(char email[]);
+bool compareDates(BirthDate date1, BirthDate date2);
 
 // Global Variables:
 // Stores the contacts
@@ -60,71 +61,13 @@ int i = 0;
 int j = 0;
 int k = 0;
 
-void swapDates(BirthDate arr[], int row1, int row2)
-{
-    BirthDate temp;
-    temp = arr[row1];
-    arr[row1] = arr[row2];
-    arr[row2] = temp;
-}
-
-bool compareDates(BirthDate date1, BirthDate date2)
-{
-    // All cases when true should be returned
-    if (date1.year > date2.year)
-        return true;
-    if (date1.year == date2.year && date1.month > date2.month)
-        return true;
-    if (date1.year == date2.year && date1.month == date2.month &&
-        date1.day > date2.day)
-        return true;
-
-    // If none of the above cases satisfy, return false
-    return false;
-}
-
-/* Function to print an array */
-void printDates(BirthDate arr[], int size)
-{
-    for (i = 0; i < size; i++)
-        printf("%d-%d-%d\n", arr[i].day, arr[i].month, arr[i].year);
-}
-
 int main()
 {
     load();
     //     while (true)
     //         menu();
 
-    // int arr[] = {64, 34, 25, 12, 22, 11, 90};
-    BirthDate arr[] = {{20, 1, 2014},
-                       {25, 3, 2010},
-                       {3, 12, 1676},
-                       {18, 11, 1982},
-                       {19, 4, 2015},
-                       {9, 7, 2015}};
-    int n = sizeof(arr) / sizeof(arr[0]);
-
-    printDates(arr, n);
-    printf("Swapped:\n");
-    for (i = 0; i < n - 1; i++)
-    {
-
-        // Last i elements are already in place
-        for (j = 0; j < n - i - 1; j++)
-        {
-            if (compareDates(arr[j], arr[j + 1]))
-            {
-                BirthDate temp;
-                temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
-            }
-            swapDates(arr, j, j + 1);
-        }
-    }
-    printDates(arr, n);
-    // return 0;
+    printContacts();
 }
 
 void load()
@@ -348,15 +291,53 @@ void sortByLastName()
     error("TODO\n");
 }
 
+bool compareDates(BirthDate date1, BirthDate date2)
+{
+    // All cases when true should be returned
+    if (date1.year > date2.year)
+        return true;
+    if (date1.year == date2.year && date1.month > date2.month)
+        return true;
+    if (date1.year == date2.year && date1.month == date2.month &&
+        date1.day > date2.day)
+        return true;
+    // If none of the above cases satisfy, return false
+    return false;
+}
+
 void sortByDate()
 {
-    BirthDate dates[MAXCONTACTS];
+    Contact arr[MAXCONTACTS];
 
     for (i = 0; i < Count; i++)
+        arr[i] = contacts[i];
+    for (i = 0; i < Count - 1; i++)
     {
-        dates[i].day = contacts[i].date.day;
-        dates[i].month = contacts[i].date.month;
-        dates[i].year = contacts[i].date.year;
+        // Last i elements are already in place
+        for (j = 0; j < Count - i - 1; j++)
+        {
+            if (compareDates(arr[j].date, arr[j + 1].date))
+            {
+                Contact temp;
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+
+    printf("\n\n");
+    for (i = 0; i < Count; i++)
+    {
+        printf("%s, ", arr[i].lastName);
+        printf("%s, ", arr[i].firstName);
+        printf("%d-%d-%d, ",
+               arr[i].date.day,
+               arr[i].date.month,
+               arr[i].date.year);
+        printf("%s, ", arr[i].address);
+        printf("%s, ", arr[i].number);
+        printf("%s\n", arr[i].email);
     }
 }
 
