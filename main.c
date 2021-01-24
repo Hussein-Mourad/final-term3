@@ -430,19 +430,37 @@ bool validDate(char date[])
     if (day > 0 && day <= 31 && month > 0 && month <= 12 && year <= getCurrentYear() && year >= 1900)
     {
         // handles feb
-        if (month == 2 && day > 29)
+        if (month == 2)
         {
-            error("Error! Invalid Date entry.\n");
-            return false;
+            if(day>29)
+            {
+                error("Error! Invalid Date entry.\n");
+                return false;
+            }
+            else if(day==29)
+            {
+                if(year%4 == 0)
+                    return true;
+                else
+                {
+                    error("Error! Invalid Date entry.\n");
+                    return false;
+                }
+            }
+            else
+                return true;
         }
         //handle months which has only 30 days
-        if ((month == 4 || month == 6 ||
+        else if ((month == 4 || month == 6 ||
              month == 9 || month == 11) &&
             (day > 30))
         {
             error("Error! Invalid Date entry.\n");
             return false;
         }
+        //handle rest of dates
+        else
+            return true;
     }
     else
     {
