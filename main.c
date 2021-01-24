@@ -65,8 +65,9 @@ int k = 0;
 int main()
 {
     load();
-    while (true)
-        menu();
+    // while (true)
+    //     menu();
+    modify();
 }
 
 void load()
@@ -126,9 +127,8 @@ void query()
 
 void add()
 {
-    char input[1];
-    char date[12];
-
+    char input[1]; // Stores input from the user
+    char date[12]; // Stores the date tmp until it is valid
     printf("Enter Last Name: ");
     scanf("%99s", contacts[Count].lastName);
     printf("Enter First Name: ");
@@ -155,6 +155,7 @@ void add()
     } while (!validEmail(contacts[Count].email));
 
     Count++;
+
     success("\nContact added successfully.");
 
     printf("\nDo you want to add another one? (y/n) ");
@@ -167,15 +168,6 @@ void add()
         add();
 }
 
-void deleteContact()
-{
-    error("TODO\n");
-}
-
-void modify()
-{
-    error("TODO\n");
-}
 
 void printMenu()
 {
