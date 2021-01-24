@@ -42,6 +42,7 @@ void menu();
 void sortByLastName();
 void sortByDate();
 
+int compareNames(const void *pa,const void *pb);
 void error(char message[]);
 void success(char message[]);
 void pause();
@@ -82,15 +83,15 @@ void load()
 
     while (!feof(f))
     { // %100[^,], Reads at most 100 character or until a comma is encountered
-        fscanf(f, "%100[^,],", contacts[Count].lastName);
-        fscanf(f, "%100[^,],", contacts[Count].firstName);
+        fscanf(f, "%99[^,],", contacts[Count].lastName);
+        fscanf(f, "%99[^,],", contacts[Count].firstName);
         fscanf(f, "%2d-%2d-%4d,",
                &contacts[Count].date.day,
                &contacts[Count].date.month,
                &contacts[Count].date.year);
-        fscanf(f, "%100[^,],", contacts[Count].address);
+        fscanf(f, "%99[^,],", contacts[Count].address);
         fscanf(f, "%15[^,],", contacts[Count].number);
-        fscanf(f, "%100s\n", contacts[Count].email);
+        fscanf(f, "%99s\n", contacts[Count].email);
         Count++;
     }
     fclose(f);
@@ -175,7 +176,7 @@ void printMenu()
     char menuItems[3][MAXSTRING] = {"Normal", "Sort by last name.", "Sort by date of birth."};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
 
-    printf("\nChoose an option:\n");
+    printf("\nChoose the number of your option:\n");
     for (i = 0; i < menuSize; i++)
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
@@ -247,7 +248,7 @@ void menu()
     char input[10];
     char menuItems[8][MAXSTRING] = {"Query", "Add", "Delete", "Modify", "Print", "About", "Save", "Exit"};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    printf("\nChoose an option from the menu below:\n");
+    printf("\nChoose an option from the menu below(enter a number):\n");
     for (i = 0; i < menuSize; i++)
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
@@ -316,10 +317,20 @@ void printContacts(Contact arr[])
                arr[i].email);
     }
 }
-
+int compareNames(const void *pa,const void *pb)
+{
+    const Contact *p1=pa;
+    const Contact *p2=pb;
+    return strcmp(p1->lastName,p2->lastName);
+}
 void sortByLastName()
 {
-    error("TODO\n");
+    Contact tmp[MAXCONTACTS];
+    int x;
+    for(x=0; x<Count; x++)
+        tmp[x]=contacts[x];
+    qsort(tmp,x,sizeof(Contact),compare);
+    printContacts(tmp);
 }
 
 bool compareDates(BirthDate date1, BirthDate date2)
@@ -442,10 +453,10 @@ bool validPhone(char num[])
 
     for (i = 0; i < strlen(num); i++)
     {
-        if (isalpha(num[i]) || strlen(num) < 11)
+        if (!isdigit(num[i]) || strlen(num) != 11)
         {
             error("Error! Invalid phone number.");
-            printf(" (phone number must be at least 11 digits and doesn't contain characters)\n");
+            printf(" (phone number must be 11 digits and doesn't contain characters)\n");
             return false;
         }
     }
