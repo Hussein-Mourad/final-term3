@@ -337,13 +337,8 @@ void sortByLastName()
     int x;
     for(x=0; x<Count; x++)
         tmp[x]=contacts[x];
-    printf("\nUnsorted:\n");
-    for(x=0; x<Count; x++)
-        printf("%s,%s,%d-%d-%d,%s,%s,%s\n",tmp[x].lastName,tmp[x].firstName,tmp[x].date.day,tmp[x].date.month,tmp[x].date.year,tmp[x].address,tmp[x].number,tmp[x].email);
     qsort(tmp,x,sizeof(Contact),compare);
-    printf("\nSorted by Last Name:\n");
-    for(x=0; x<Count; x++)
-        printf("%s,%s,%d-%d-%d,%s,%s,%s\n",tmp[x].lastName,tmp[x].firstName,tmp[x].date.day,tmp[x].date.month,tmp[x].date.year,tmp[x].address,tmp[x].number,tmp[x].email);
+    printContacts(tmp);
 }
 
 bool compareDates(BirthDate date1, BirthDate date2)
