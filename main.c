@@ -42,7 +42,7 @@ void menu();
 void sortByLastName();
 void sortByDate();
 
-int compare(const void *pa,const void *pb);
+int compareNames(const void *pa,const void *pb);
 void error(char message[]);
 void success(char message[]);
 void pause();
@@ -325,7 +325,7 @@ void printContacts(Contact arr[])
                arr[i].email);
     }
 }
-int compare(const void *pa,const void *pb)
+int compareNames(const void *pa,const void *pb)
 {
     const Contact *p1=pa;
     const Contact *p2=pb;
@@ -336,16 +336,7 @@ void sortByLastName()
     Contact tmp[MAXCONTACTS];
     int x;
     for(x=0; x<Count; x++)
-    {
-        strcpy(tmp[x].lastName,contacts[x].lastName);
-        strcpy(tmp[x].firstName,contacts[x].firstName);
-        tmp[x].date.day=contacts[x].date.day;
-        tmp[x].date.month=contacts[x].date.month;
-        tmp[x].date.year=contacts[x].date.year;
-        strcpy(tmp[x].address,contacts[x].address);
-        strcpy(tmp[x].number,contacts[x].number);
-        strcpy(tmp[x].email,contacts[x].email);
-    }
+        tmp[x]=contacts[x];
     printf("\nUnsorted:\n");
     for(x=0; x<Count; x++)
         printf("%s,%s,%d-%d-%d,%s,%s,%s\n",tmp[x].lastName,tmp[x].firstName,tmp[x].date.day,tmp[x].date.month,tmp[x].date.year,tmp[x].address,tmp[x].number,tmp[x].email);
