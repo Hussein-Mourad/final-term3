@@ -178,7 +178,7 @@ void modify()
 void printMenu()
 {
     char input[10];
-    char menuItems[3][MAXSTRING] = {"Sort by last name.", "Sort by date of birth."};
+    char menuItems[2][MAXSTRING] = {"Sort by last name.", "Sort by date of birth."};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
 
     printf("\nChoose the number of your option:\n");
@@ -231,8 +231,29 @@ void save()
 
 void quit()
 {
+    FILE *f;
+    Contact tmpContacts[MAXCONTACTS];
+    int tmpCount;
     char input[1];
-    error("warning: All unsaved data will be lost.\n");
+    f = fopen(FILENAME, "r");
+
+    while (!feof(f))
+    { // %100[^,], Reads at most 100 character or until a comma is encountered
+        fscanf(f, "%99[^,],", tmpContacts[tmpCount].lastName);
+        fscanf(f, "%99[^,],", tmpContacts[tmpCount].firstName);
+        fscanf(f, "%2d-%2d-%4d,",
+               &tmpContacts[tmpCount].date.day,
+               &tmpContacts[tmpCount].date.month,
+               &tmpContacts[tmpCount].date.year);
+        fscanf(f, "%99[^,],", tmpContacts[tmpCount].address);
+        fscanf(f, "%15[^,],", tmpContacts[tmpCount].number);
+        fscanf(f, "%99s\n", tmpContacts[tmpCount].email);
+        tmpCount++;
+    }
+    fclose(f);
+
+    if(tmpCount != Count)
+        error("warning: You have unsaved data that can be lost.\n");
 
     printf("Are you sure you want to quit? (y/n) ");
     scanf("%s", input);
@@ -269,7 +290,6 @@ void menu()
         break;
     case 2:
         add();
-        pause();
         break;
     case 3:
         deleteContact();
