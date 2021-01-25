@@ -178,7 +178,7 @@ void modify()
 void printMenu()
 {
     char input[10];
-    char menuItems[3][MAXSTRING] = {"Normal", "Sort by last name.", "Sort by date of birth."};
+    char menuItems[3][MAXSTRING] = {"Sort by last name.", "Sort by date of birth."};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
 
     printf("\nChoose the number of your option:\n");
@@ -195,12 +195,9 @@ void printMenu()
     switch (atoi(input))
     {
     case 1:
-        printContacts(contacts);
-        break;
-    case 2:
         sortByLastName();
         break;
-    case 3:
+    case 2:
         sortByDate();
         break;
 
@@ -330,12 +327,8 @@ int compareNames(const void *pa, const void *pb)
 }
 void sortByLastName()
 {
-    Contact tmp[MAXCONTACTS];
-    int x;
-    for (x = 0; x < Count; x++)
-        tmp[x] = contacts[x];
-    qsort(tmp, x, sizeof(Contact), compareNames);
-    printContacts(tmp);
+    qsort(contacts, Count, sizeof(Contact), compareNames);
+    printContacts(contacts);
 }
 
 bool compareDates(BirthDate date1, BirthDate date2)
@@ -354,7 +347,7 @@ bool compareDates(BirthDate date1, BirthDate date2)
 
 void sortByDate()
 {
-    
+
     for (i = 0; i < Count - 1; i++)
     {
         // Last i elements are already in place
@@ -423,19 +416,37 @@ bool validDate(char date[])
     if (day > 0 && day <= 31 && month > 0 && month <= 12 && year <= getCurrentYear() && year >= 1900)
     {
         // handles feb
-        if (month == 2 && day > 29)
+        if (month == 2)
         {
-            error("Error! Invalid Date entry.\n");
-            return false;
+            if (day > 29)
+            {
+                error("Error! Invalid Date entry.\n");
+                return false;
+            }
+            else if (day == 29)
+            {
+                if (year % 4 == 0)
+                    return true;
+                else
+                {
+                    error("Error! Invalid Date entry.\n");
+                    return false;
+                }
+            }
+            else
+                return true;
         }
         //handle months which has only 30 days
-        if ((month == 4 || month == 6 ||
-             month == 9 || month == 11) &&
-            (day > 30))
+        else if ((month == 4 || month == 6 ||
+                  month == 9 || month == 11) &&
+                 (day > 30))
         {
             error("Error! Invalid Date entry.\n");
             return false;
         }
+        //handle rest of dates
+        else
+            return true;
     }
     else
     {
