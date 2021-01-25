@@ -333,11 +333,7 @@ int compareNames(const void *pa,const void *pb)
 }
 void sortByLastName()
 {
-    Contact tmp[MAXCONTACTS];
-    int x;
-    for(x=0; x<Count; x++)
-        tmp[x]=contacts[x];
-    qsort(tmp,x,sizeof(Contact),compare);
+    qsort(contacts,Count,sizeof(Contact),compareNames);
     printContacts(tmp);
 }
 
