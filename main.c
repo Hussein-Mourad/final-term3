@@ -42,7 +42,7 @@ void menu();
 void sortByLastName();
 void sortByDate();
 
-int compareNames(const void *pa,const void *pb);
+int compareNames(const void *pa, const void *pb);
 void error(char message[]);
 void success(char message[]);
 void pause();
@@ -66,9 +66,8 @@ int k = 0;
 int main()
 {
     load();
-    // while (true)
-    //     menu();
-    modify();
+    while (true)
+        menu();
 }
 
 void load()
@@ -122,7 +121,7 @@ void query()
     }
     if (!found)
     {
-        error("No person found!\n");
+        error("Person not found!\n");
     }
 }
 
@@ -169,6 +168,12 @@ void add()
         add();
 }
 
+void deleteContact()
+{
+}
+void modify()
+{
+}
 
 void printMenu()
 {
@@ -317,19 +322,19 @@ void printContacts(Contact arr[])
                arr[i].email);
     }
 }
-int compareNames(const void *pa,const void *pb)
+int compareNames(const void *pa, const void *pb)
 {
-    const Contact *p1=pa;
-    const Contact *p2=pb;
-    return strcmp(p1->lastName,p2->lastName);
+    const Contact *p1 = pa;
+    const Contact *p2 = pb;
+    return strcmp(p1->lastName, p2->lastName);
 }
 void sortByLastName()
 {
     Contact tmp[MAXCONTACTS];
     int x;
-    for(x=0; x<Count; x++)
-        tmp[x]=contacts[x];
-    qsort(tmp,x,sizeof(Contact),compare);
+    for (x = 0; x < Count; x++)
+        tmp[x] = contacts[x];
+    qsort(tmp, x, sizeof(Contact), compareNames);
     printContacts(tmp);
 }
 
@@ -349,27 +354,23 @@ bool compareDates(BirthDate date1, BirthDate date2)
 
 void sortByDate()
 {
-    Contact arr[MAXCONTACTS];
-
-    for (i = 0; i < Count; i++)
-        arr[i] = contacts[i];
-
+    
     for (i = 0; i < Count - 1; i++)
     {
         // Last i elements are already in place
         for (j = 0; j < Count - i - 1; j++)
         {
-            if (compareDates(arr[j].date, arr[j + 1].date))
+            if (compareDates(contacts[j].date, contacts[j + 1].date))
             {
                 Contact temp;
-                temp = arr[j];
-                arr[j] = arr[j + 1];
-                arr[j + 1] = temp;
+                temp = contacts[j];
+                contacts[j] = contacts[j + 1];
+                contacts[j + 1] = temp;
             }
         }
     }
 
-    printContacts(arr);
+    printContacts(contacts);
 }
 
 int getCurrentYear()
