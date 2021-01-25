@@ -186,12 +186,6 @@ void printMenu()
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
 
-    if (atoi(input) == 0)
-    {
-        printf("Error! Unexpected input. ");
-        pause();
-    }
-
     switch (atoi(input))
     {
     case 1:
@@ -251,9 +245,49 @@ void quit()
         tmpCount++;
     }
     fclose(f);
-
+    
+    int flag=0;
     if(tmpCount != Count)
-        error("warning: You have unsaved data that can be lost.\n");
+        error("warning: You have unsaved data that will be lost.\n");
+    else if(tmpCount == Count)
+    {
+        for(i = 0; i < Count; i++)
+        {
+            if(strcmp(contacts[i].firstName,tmpContacts[i].firstName))
+            {
+                flag=1;
+                break;
+            }
+            if(strcmp(contacts[i].lastName,tmpContacts[i].lastName))
+            {
+                flag=1;
+                break;
+            }
+            if(contacts[i].date.day!=tmpContacts[i].date.day || contacts[i].date.month!=tmpContacts[i].date.month || contacts[i].date.year!=tmpContacts[i].date.year)
+            {
+                flag=1;
+                break;
+            }
+            if(strcmp(contacts[i].address,tmpContacts[i].address))
+            {
+                flag=1;
+                break;
+            }
+            if(strcmp(contacts[i].number,tmpContacts[i].number))
+            {
+                flag=1;
+                break;
+            }
+            if(strcmp(contacts[i].email,tmpContacts[i].email))
+            {
+                flag=1;
+                break;
+            }
+        }
+        if(flag)
+            error("Warning: You have unsaved data that will be lost.\n");
+        
+    }
 
     printf("Are you sure you want to quit? (y/n) ");
     scanf("%s", input);
