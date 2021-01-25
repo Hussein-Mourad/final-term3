@@ -127,8 +127,8 @@ void query()
 
 void add()
 {
-    char input[1]; // Stores input from the user
-    char date[12]; // Stores the date tmp until it is valid
+    char input[10];       // Stores input from the user
+    char date[MAXSTRING]; // Stores the date tmp until it is valid
     printf("Enter Last Name: ");
     scanf("%99s", contacts[Count].lastName);
     printf("Enter First Name: ");
@@ -139,13 +139,13 @@ void add()
     do
     {
         printf("Enter Birth Day (dd-mm-yyyy): ");
-        scanf("%s", date);
+        scanf("%99s", date);
     } while (!validDate(date));
 
     do
     {
         printf("Enter phone number: ");
-        scanf("%15s", contacts[Count].number);
+        scanf("%99s", contacts[Count].number);
     } while (!validPhone(contacts[Count].number));
 
     do
@@ -171,6 +171,7 @@ void add()
 void deleteContact()
 {
 }
+
 void modify()
 {
 }
@@ -178,7 +179,7 @@ void modify()
 void printMenu()
 {
     char input[10];
-    char menuItems[2][MAXSTRING] = {"Sort by last name.", "Sort by date of birth."};
+    char menuItems[3][MAXSTRING] = {"Normal", "Sort by last name.", "Sort by date of birth."};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
 
     printf("\nChoose the number of your option:\n");
@@ -189,9 +190,12 @@ void printMenu()
     switch (atoi(input))
     {
     case 1:
-        sortByLastName();
+        printContacts(contacts);
         break;
     case 2:
+        sortByLastName();
+        break;
+    case 3:
         sortByDate();
         break;
 
@@ -227,8 +231,10 @@ void quit()
 {
     FILE *f;
     Contact tmpContacts[MAXCONTACTS];
-    int tmpCount;
-    char input[1];
+    int tmpCount = 0;
+    char input[10];
+    bool flag = false;
+
     f = fopen(FILENAME, "r");
 
     while (!feof(f))
@@ -245,54 +251,39 @@ void quit()
         tmpCount++;
     }
     fclose(f);
-    
-    int flag=0;
-    if(tmpCount != Count)
-        error("warning: You have unsaved data that will be lost.\n");
-    else if(tmpCount == Count)
+
+    if (tmpCount != Count)
+        error("Warning: You have unsaved data that will be lost.\n");
+
+    else if (tmpCount == Count)
     {
-        for(i = 0; i < Count; i++)
+        for (i = 0; i < Count; i++)
         {
-            if(strcmp(contacts[i].firstName,tmpContacts[i].firstName))
+            // Compares contacts
+            if (strcmp(contacts[i].firstName, tmpContacts[i].firstName) ||
+                strcmp(contacts[i].lastName, tmpContacts[i].lastName) ||
+                contacts[i].date.day != tmpContacts[i].date.day ||
+                contacts[i].date.month != tmpContacts[i].date.month ||
+                contacts[i].date.year != tmpContacts[i].date.year ||
+                strcmp(contacts[i].address, tmpContacts[i].address) ||
+                strcmp(contacts[i].number, tmpContacts[i].number) ||
+                strcmp(contacts[i].email, tmpContacts[i].email))
             {
-                flag=1;
-                break;
-            }
-            if(strcmp(contacts[i].lastName,tmpContacts[i].lastName))
-            {
-                flag=1;
-                break;
-            }
-            if(contacts[i].date.day!=tmpContacts[i].date.day || contacts[i].date.month!=tmpContacts[i].date.month || contacts[i].date.year!=tmpContacts[i].date.year)
-            {
-                flag=1;
-                break;
-            }
-            if(strcmp(contacts[i].address,tmpContacts[i].address))
-            {
-                flag=1;
-                break;
-            }
-            if(strcmp(contacts[i].number,tmpContacts[i].number))
-            {
-                flag=1;
-                break;
-            }
-            if(strcmp(contacts[i].email,tmpContacts[i].email))
-            {
-                flag=1;
+                flag = true;
                 break;
             }
         }
-        if(flag)
+        if (flag)
             error("Warning: You have unsaved data that will be lost.\n");
-        
     }
 
     printf("Are you sure you want to quit? (y/n) ");
     scanf("%s", input);
-    if (strcmp(input, "y") != 0 && strcmp(input, "n") != 0)
+    if (strcmp(input, "y") && strcmp(input, "n"))
+    {
         printf("\nError! Unexpected input %s.\n", input);
+        pause();
+    }
 
     if (strcmp(input, "y") == 0)
         exit(2);
@@ -347,7 +338,6 @@ void menu()
         break;
     case 8:
         quit();
-        pause();
         break;
     default:
         printf("\nError! Unexpected input. \n");
@@ -479,16 +469,12 @@ bool validDate(char date[])
             }
             else if (day == 29)
             {
-                if (year % 4 == 0)
-                    return true;
-                else
+                if (year % 4 != 0)
                 {
                     error("Error! Invalid Date entry.\n");
                     return false;
                 }
             }
-            else
-                return true;
         }
         //handle months which has only 30 days
         else if ((month == 4 || month == 6 ||
@@ -498,9 +484,6 @@ bool validDate(char date[])
             error("Error! Invalid Date entry.\n");
             return false;
         }
-        //handle rest of dates
-        else
-            return true;
     }
     else
     {
@@ -519,10 +502,10 @@ bool validPhone(char num[])
 
     for (i = 0; i < strlen(num); i++)
     {
-        if (!isdigit(num[i]) || strlen(num) != 11)
+        if (!isdigit(num[i]) || strlen(num) < 7 || strlen(num) > 15)
         {
             error("Error! Invalid phone number.");
-            printf(" (phone number must be 11 digits and doesn't contain characters)\n");
+            printf(" (phone number must between 7 and 15 digits and doesn't contain characters)\n");
             return false;
         }
     }
