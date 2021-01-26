@@ -1,8 +1,0 @@
-Steven,Thomas,3-12-1676,26 Elhoreya Street,1234567899,sthomas@gmail.com
-Steven,Thomas,18-11-1982,26 Elhoreya Street,1234567899,sthomas@gmail.com
-Kassem,hussein,10-9-2001,123 main street,013433545443,hussein@domain.com
-Steven,Thomas,20-1-2004,26 Elhoreya Street,1234567899,sthomas@gmail.com
-Steven,Thomas,25-3-2010,26 Elhoreya Street,1234567899,sthomas@gmail.com
-Steven,Thomas,19-4-2015,26 Elhoreya Street,1234567899,sthomas@gmail.com
-Steven,Thomas,19-4-2015,26 Elhoreya Street,1234567899,sthomas@gmail.com
-Steven,Thomas,9-7-2015,26 Elhoreya Street,1234567899,sthomas@gmail.com
