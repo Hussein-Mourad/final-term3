@@ -355,4 +355,5 @@ void printMenu()
 ![print sample run](img/print3.png)
 
 **Error Handling**
+
 ![print sample run](img/printError.png)
