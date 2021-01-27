@@ -47,7 +47,7 @@ void error(char message[]);
 void success(char message[]);
 void pause();
 int getCurrentYear();
-void printContacts(Contact arr[]);
+void printContacts(Contact arr[], int size);
 bool validDate(char date[]);
 bool validPhone(char num[]);
 bool validEmail(char email[]);
@@ -162,7 +162,7 @@ void add()
     scanf("%s", input);
 
     if (strcmp(input, "y") != 0 && strcmp(input, "n") != 0)
-        printf("\nError! Unexpected input %s.\n", input);
+        error("\nError! Unexpected input \n");
 
     if (strcmp(input, "y") == 0)
         add();
@@ -170,6 +170,92 @@ void add()
 
 void deleteContact()
 {
+    // Contact hold[MAXCONTACTS];
+    // char lastName[20], firstName[20];
+    // int tmpCount;
+
+    // printf("Enter the Last Name of the Contact to be deleted: ");
+    // scanf("%s", lastName);
+    // printf("Enter the First Name of the Contact to be deleted: ");
+    // scanf("%s", firstName);
+    // tmpCount = 0;
+    // for (k = 0; k < Count; k++)
+    // {
+    //     int cmp1 = strcmp(contacts[k].lastName, lastName);
+    //     int cmp2 = strcmp(contacts[k].firstName, firstName);
+    //     if (cmp1 != 0 || cmp2 != 0)
+    //     {
+    //         hold[tmpCount] = contacts[k];
+    //         tmpCount++;
+    //     }
+    // }
+    // if (tmpCount != Count)
+    // {
+
+    //     for (j = 0; j < Count; j++)
+    //     {
+    //         strcpy(contacts[j].lastName, "\0");
+    //         strcpy(contacts[j].firstName, "\0");
+    //         contacts[j].date.day = 0;
+    //         contacts[j].date.month = 0;
+    //         contacts[j].date.year = 0;
+    //         strcpy(contacts[j].address, "\0");
+    //         strcpy(contacts[j].number, "\0");
+    //         strcpy(contacts[j].email, "\0");
+    //     }
+
+    //     for (k = 0; k < tmpCount; k++)
+    //         contacts[k] = hold[k];
+    // }
+    // else
+    //     printf("\nDeleting a Contact not existing.\n");
+
+    // success("\nContact(s) Deleted Successfully\n");
+    // Count = tmpCount;
+
+    // char lastName[MAXSTRING];
+    // char firstName[MAXSTRING];
+
+    // Contact newContacts[Count];
+    // int newCount = 0;
+
+    // printf("Enter the last name of the contact you want to delete: ");
+    // scanf("%s", lastName);
+    // printf("Enter the first name of the contact you want to delete: ");
+    // scanf("%s", firstName);
+
+    // for (i = 0; i < Count; i++)
+    // {
+    //     if ((strcmp(contacts[i].lastName, lastName) == 0) == 0 &&
+    //         (strcmp(contacts[i].firstName, firstName) == 0) == 0)
+    //     {
+    //         newContacts[newCount] = contacts[i];
+    //         newCount++;
+    //     }
+    // }
+    // for (i = 0; i < newCount; i++)
+    //     contacts[i] = newContacts[i];
+    
+    // Count = newCount;
+
+
+    // for (i = 0; i < Count; i++)
+    // {
+
+    //     if ((strcmp(contacts[i].firstName, firstName) == 0) && (strcmp(contacts[i].lastName, lastName) == 0))
+    //     {
+
+    //         for (j = i; j < Count - 1; j++)
+    //         {
+    //             contacts[j] = contacts[j + 1];
+    //         }
+    //         Count--;
+
+    //         printf("the contact is deleted successfully \n");
+    //     }
+    //     else
+    //         printf("this name does not match any of the saved contacts\n");
+    // }
 }
 
 void modify()
@@ -182,7 +268,7 @@ void printMenu()
     char menuItems[3][MAXSTRING] = {"Normal", "Sort by last name.", "Sort by date of birth."};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
 
-    printf("\nChoose the number of your option:\n");
+    printf("Choose the number of your option:\n");
     for (i = 0; i < menuSize; i++)
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
@@ -190,7 +276,7 @@ void printMenu()
     switch (atoi(input))
     {
     case 1:
-        printContacts(contacts);
+        printContacts(contacts, Count);
         break;
     case 2:
         sortByLastName();
@@ -200,7 +286,7 @@ void printMenu()
         break;
 
     default:
-        printf("\nError! Unexpected input. \n");
+        error("\nError! Unexpected input. \n");
         pause();
         printMenu();
         break;
@@ -281,7 +367,7 @@ void quit()
     scanf("%s", input);
     if (strcmp(input, "y") && strcmp(input, "n"))
     {
-        printf("\nError! Unexpected input %s.\n", input);
+        error("\nError! Unexpected input.\n");
         pause();
     }
 
@@ -296,7 +382,7 @@ void menu()
     char input[10];
     char menuItems[8][MAXSTRING] = {"Query", "Add", "Delete", "Modify", "Print", "About", "Save", "Exit"};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    printf("\nChoose an option from the menu below(enter a number):\n");
+    printf("\nChoose an option from the menu below (enter a number):\n");
     for (i = 0; i < menuSize; i++)
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
@@ -304,21 +390,26 @@ void menu()
     switch (atoi(input))
     {
     case 1:
-        query("Kassem");
+        printf("Query:\n");
+        query();
         pause();
         break;
     case 2:
+        printf("Add:\n");
         add();
         break;
     case 3:
+        printf("Delete:\n");
         deleteContact();
         pause();
         break;
     case 4:
+        printf("Modify:\n");
         modify();
         pause();
         break;
     case 5:
+        printf("Print:\n");
         printMenu();
         pause();
         break;
@@ -334,17 +425,17 @@ void menu()
         quit();
         break;
     default:
-        printf("Error! Unexpected input. \n");
+        error("Error! Unexpected input. \n");
         pause();
         break;
     }
 }
 
-void printContacts(Contact arr[])
+void printContacts(Contact arr[], int size)
 {
     printf("\n(Last,First,Date,Address,Number,Email)\n");
 
-    for (i = 0; i < Count; i++)
+    for (i = 0; i < size; i++)
     {
         printf("%s,%s,%d-%d-%d,%s,%s,%s\n",
                arr[i].lastName,
@@ -366,7 +457,7 @@ int compareNames(const void *pa, const void *pb)
 void sortByLastName()
 {
     qsort(contacts, Count, sizeof(Contact), compareNames);
-    printContacts(contacts);
+    printContacts(contacts, Count);
 }
 
 bool compareDates(BirthDate date1, BirthDate date2)
@@ -401,7 +492,7 @@ void sortByDate()
         }
     }
 
-    printContacts(contacts);
+    printContacts(contacts, Count);
 }
 
 int getCurrentYear()

@@ -34,6 +34,8 @@
       - [Code:](#code-5)
       - [Sample Run:](#sample-run-1)
 
+
+
 ## User Guide
 
 ### Starting the program 
@@ -124,7 +126,6 @@ int j = 0;
 int k = 0;
 ```
 
-
 ### Menu
 This is the most important function as it helps the user navigate through the program with ease. It starts of by clearing the screen and then it renders a menu where the user can choose from several options. It Checks for invalid input 
 
@@ -136,7 +137,7 @@ void menu()
     char input[10];
     char menuItems[8][MAXSTRING] = {"Query", "Add", "Delete", "Modify", "Print", "About", "Save", "Exit"};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
-    printf("\nChoose an option from the menu below(enter a number):\n");
+    printf("\nChoose an option from the menu below (enter a number):\n");
     for (i = 0; i < menuSize; i++)
         printf("(%d)  %s\n", (i + 1), menuItems[i]);
     scanf("%s", input);
@@ -144,21 +145,26 @@ void menu()
     switch (atoi(input))
     {
     case 1:
-        query("Kassem");
+        printf("Query:\n");
+        query();
         pause();
         break;
     case 2:
+        printf("Add:\n");
         add();
         break;
     case 3:
+        printf("Delete:\n");
         deleteContact();
         pause();
         break;
     case 4:
+        printf("Modify:\n");
         modify();
         pause();
         break;
     case 5:
+        printf("Print:\n");
         printMenu();
         pause();
         break;
@@ -174,7 +180,7 @@ void menu()
         quit();
         break;
     default:
-        printf("Error! Unexpected input. \n");
+        error("Error! Unexpected input. \n");
         pause();
         break;
     }
