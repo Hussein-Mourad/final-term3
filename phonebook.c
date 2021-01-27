@@ -336,7 +336,7 @@ void quit()
     }
 
     if (strcmp(input, "y") == 0)
-        exit(2);
+        exit(0);
 }
 
 // Utility functions
@@ -344,7 +344,7 @@ void menu()
 {
     system("@cls||clear"); // clears the screen
     char input[10];
-    char menuItems[8][MAXSTRING] = {"Query", "Add", "Delete", "Modify", "Print", "About", "Save", "Exit"};
+    char menuItems[8][MAXSTRING] = {"Query", "Add", "Delete", "Modify", "Print", "About", "Save", "Quit"};
     int menuSize = sizeof(menuItems) / sizeof(menuItems[0]);
     printf("\nChoose an option from the menu below (enter a number):\n");
     for (i = 0; i < menuSize; i++)
