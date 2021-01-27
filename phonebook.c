@@ -170,74 +170,38 @@ void add()
 
 void deleteContact()
 {
-    // Contact hold[MAXCONTACTS];
-    // char lastName[20], firstName[20];
-    // int tmpCount;
+    char lastName[MAXSTRING];
+    char firstName[MAXSTRING];
 
-    // printf("Enter the Last Name of the Contact to be deleted: ");
-    // scanf("%s", lastName);
-    // printf("Enter the First Name of the Contact to be deleted: ");
-    // scanf("%s", firstName);
-    // tmpCount = 0;
-    // for (k = 0; k < Count; k++)
-    // {
-    //     int cmp1 = strcmp(contacts[k].lastName, lastName);
-    //     int cmp2 = strcmp(contacts[k].firstName, firstName);
-    //     if (cmp1 != 0 || cmp2 != 0)
-    //     {
-    //         hold[tmpCount] = contacts[k];
-    //         tmpCount++;
-    //     }
-    // }
-    // if (tmpCount != Count)
-    // {
+    Contact newContacts[Count];
+    int newCount = 0;
+    printf("Enter the last name of the contact you want to delete: ");
+    scanf("%s", lastName);
+    printf("Enter the first name of the contact you want to delete: ");
+    scanf("%s", firstName);
 
-    //     for (j = 0; j < Count; j++)
-    //     {
-    //         strcpy(contacts[j].lastName, "\0");
-    //         strcpy(contacts[j].firstName, "\0");
-    //         contacts[j].date.day = 0;
-    //         contacts[j].date.month = 0;
-    //         contacts[j].date.year = 0;
-    //         strcpy(contacts[j].address, "\0");
-    //         strcpy(contacts[j].number, "\0");
-    //         strcpy(contacts[j].email, "\0");
-    //     }
+    // copies all contacts into new array
+    for (i = 0; i < Count; i++)
+    {
+        if (strcmp(contacts[i].lastName, lastName) ||
+            strcmp(contacts[i].firstName, firstName))
+        {
+            newContacts[newCount] = contacts[i];
+            newCount++;
+        }
+    }
 
-    //     for (k = 0; k < tmpCount; k++)
-    //         contacts[k] = hold[k];
-    // }
-    // else
-    //     printf("\nDeleting a Contact not existing.\n");
+    if (newCount != Count)
+    {
+        for (i = 0; i < Count; i++)
+            contacts[i] = newContacts[i];
 
-    // success("\nContact(s) Deleted Successfully\n");
-    // Count = tmpCount;
-
-    // char lastName[MAXSTRING];
-    // char firstName[MAXSTRING];
-
-    // Contact newContacts[Count];
-    // int newCount = 0;
-
-    // printf("Enter the last name of the contact you want to delete: ");
-    // scanf("%s", lastName);
-    // printf("Enter the first name of the contact you want to delete: ");
-    // scanf("%s", firstName);
-
-    // for (i = 0; i < Count; i++)
-    // {
-    //     if ((strcmp(contacts[i].lastName, lastName) == 0) == 0 &&
-    //         (strcmp(contacts[i].firstName, firstName) == 0) == 0)
-    //     {
-    //         newContacts[newCount] = contacts[i];
-    //         newCount++;
-    //     }
-    // }
-    // for (i = 0; i < newCount; i++)
-    //     contacts[i] = newContacts[i];
-    
-    // Count = newCount;
-
+        Count = newCount;
+        success("Contact(s) deleted successfully.\n");
+    }
+    else
+        error("\nError! contact not found.");
+    // printContacts(contacts, Count);
 
     // for (i = 0; i < Count; i++)
     // {
