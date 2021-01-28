@@ -201,25 +201,6 @@ void deleteContact()
     }
     else
         error("\nError! contact not found.");
-    // printContacts(contacts, Count);
-
-    // for (i = 0; i < Count; i++)
-    // {
-
-    //     if ((strcmp(contacts[i].firstName, firstName) == 0) && (strcmp(contacts[i].lastName, lastName) == 0))
-    //     {
-
-    //         for (j = i; j < Count - 1; j++)
-    //         {
-    //             contacts[j] = contacts[j + 1];
-    //         }
-    //         Count--;
-
-    //         printf("the contact is deleted successfully \n");
-    //     }
-    //     else
-    //         printf("this name does not match any of the saved contacts\n");
-    // }
 }
 
 void modify()
@@ -324,7 +305,6 @@ void modify()
         error("Error! Item not found.\n");
     }
 }
-
 
 void printMenu()
 {
@@ -512,12 +492,14 @@ void printContacts(Contact arr[], int size)
                arr[i].email);
     }
 }
+
 int compareNames(const void *pa, const void *pb)
 {
     const Contact *p1 = pa;
     const Contact *p2 = pb;
     return strcmp(p1->lastName, p2->lastName);
 }
+
 void sortByLastName()
 {
     qsort(contacts, Count, sizeof(Contact), compareNames);
