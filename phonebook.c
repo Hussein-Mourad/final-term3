@@ -48,7 +48,8 @@ void success(char message[]);
 void pause();
 int getCurrentYear();
 void printContacts(Contact arr[], int size);
-bool validDate(char date[]);
+void printOneContact(Contact arr[], int index);
+bool validDate(char date[], int count);
 bool validPhone(char num[]);
 bool validEmail(char email[]);
 bool compareDates(BirthDate date1, BirthDate date2);
@@ -140,7 +141,8 @@ void add()
     {
         printf("Enter Birth Day (dd-mm-yyyy): ");
         scanf("%99s", date);
-    } while (!validDate(date));
+
+    } while (!validDate(date, Count));
 
     do
     {
@@ -174,6 +176,8 @@ void deleteContact()
     char firstName[MAXSTRING];
 
     Contact newContacts[Count];
+    Contact deletedContacts[Count];
+    int deletedCount = 0;
     int newCount = 0;
     printf("Enter the last name of the contact you want to delete: ");
     scanf("%s", lastName);
@@ -189,15 +193,22 @@ void deleteContact()
             newContacts[newCount] = contacts[i];
             newCount++;
         }
+        else
+        {
+            deletedContacts[deletedCount] = contacts[i];
+            deletedCount++;
+        }
     }
 
     if (newCount != Count)
     {
         for (i = 0; i < Count; i++)
             contacts[i] = newContacts[i];
-
         Count = newCount;
-        success("Contact(s) deleted successfully.\n");
+
+        printf("\nDeleted Contacts: ");
+        printContacts(deletedContacts, deletedCount);
+        success("Contacts deleted successfully.\n");
     }
     else
         error("\nError! contact not found.");
@@ -209,6 +220,7 @@ void modify()
     int itemsCount = 0; // Stores index
     char lastName[MAXSTRING];
     char input[10];
+    char date[MAXSTRING];
 
     printf("Enter the last name of the person: ");
     scanf("%99s", lastName);
@@ -224,6 +236,8 @@ void modify()
 
     if (itemsCount == 1)
     {
+        printf("Contact to be modified: ");
+        printOneContact(contacts, items[0]);
         printf("Enter new last name: ");
         scanf("%99s", contacts[items[0]].lastName);
         printf("Enter new first name: ");
@@ -232,21 +246,24 @@ void modify()
         fgets(contacts[items[0]].address, MAXSTRING, stdin);
         scanf("%99[^\n]%*c", contacts[items[0]].address);
 
-        printf("Enter new birth day (dd-mm-yyyy): ");
-        scanf("%d-%d-%d", &contacts[items[0]].date.day, &contacts[items[0]].date.month, &contacts[items[0]].date.year);
+        do
+        {
+            printf("Enter Birth Day (dd-mm-yyyy): ");
+            scanf("%99s", date);
+        } while (!validDate(date, items[0]));
 
         do
         {
             printf("Enter new phone number: ");
-            scanf("%15s", contacts[items[0]].number);
+            scanf("%99s", contacts[items[0]].number);
         } while (!validPhone(contacts[items[0]].number));
 
         do
         {
             printf("Enter new email: ");
-            scanf("%100s", contacts[items[0]].email);
-        } while (!validEmail(contacts[items[0]].email));
+            scanf("%99s", contacts[items[0]].email);
 
+        } while (!validEmail(contacts[items[0]].email));
         success("Item modified successfully\n");
     }
 
@@ -274,7 +291,8 @@ void modify()
             printf("Error! Unexpected input. ");
             pause();
         }
-
+        printf("Contact to be modified: ");
+        printOneContact(contacts, items[num - 1]);
         printf("Enter new last name: ");
         scanf("%99s", contacts[items[num - 1]].lastName);
         printf("Enter new First name: ");
@@ -283,19 +301,22 @@ void modify()
         fgets(contacts[items[num - 1]].address, MAXSTRING, stdin);
         scanf("%99[^\n]%*c", contacts[items[num - 1]].address);
 
-        printf("Enter new birth day (dd-mm-yyyy): ");
-        scanf("%d-%d-%d", &contacts[items[num - 1]].date.day, &contacts[items[num - 1]].date.month, &contacts[items[num - 1]].date.year);
+        do
+        {
+            printf("Enter Birth Day (dd-mm-yyyy): ");
+            scanf("%99s", date);
+        } while (!validDate(date, items[num - 1]));
 
         do
         {
             printf("Enter new phone number: ");
-            scanf("%15s", contacts[items[num - 1]].number);
+            scanf("%99s", contacts[items[num - 1]].number);
         } while (!validPhone(contacts[items[num - 1]].number));
 
         do
         {
             printf("Enter new email: ");
-            scanf("%100s", contacts[items[num - 1]].email);
+            scanf("%99s", contacts[items[num - 1]].email);
         } while (!validEmail(contacts[items[num - 1]].email));
 
         success("Item modified successfully\n");
@@ -492,6 +513,18 @@ void printContacts(Contact arr[], int size)
                arr[i].email);
     }
 }
+void printOneContact(Contact arr[], int index)
+{
+    printf("%s,%s,%d-%d-%d,%s,%s,%s\n",
+           arr[index].lastName,
+           arr[index].firstName,
+           arr[index].date.day,
+           arr[index].date.month,
+           arr[index].date.year,
+           arr[index].address,
+           arr[index].number,
+           arr[index].email);
+}
 
 int compareNames(const void *pa, const void *pb)
 {
@@ -552,7 +585,7 @@ int getCurrentYear()
     return CURRENTYEAR;
 }
 
-bool validDate(char date[])
+bool validDate(char date[], int count)
 {
     long int dateLength = strlen(date); // stores the length of date
     int dashCount = 0;
@@ -622,9 +655,10 @@ bool validDate(char date[])
         return false;
     }
 
-    contacts[Count].date.day = day;
-    contacts[Count].date.month = month;
-    contacts[Count].date.year = year;
+    contacts[count].date.day = day;
+    contacts[count].date.month = month;
+    contacts[count].date.year = year;
+
     return true;
 }
 
