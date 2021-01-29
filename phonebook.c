@@ -255,7 +255,7 @@ void modify()
         modifyContact(items[num - 1]);
     }
     else
-        error("Error! Item not found.\n");
+        error("Error! Contact not found.\n");
 }
 
 void printMenu()

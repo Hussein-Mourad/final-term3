@@ -65,8 +65,10 @@
         - [Sample Run:](#sample-run-2)
       - [success](#success)
         - [Code:](#code-13)
+        - [Sample Runs:](#sample-runs-5)
       - [pause](#pause)
         - [Code:](#code-14)
+        - [Sample Runs:](#sample-runs-6)
       - [getCurrentYear](#getcurrentyear)
         - [Code:](#code-15)
       - [printContacts](#printcontacts)
@@ -302,7 +304,7 @@ void query()
 ![Query sample run](img/query2.png "Query sample run")
 
 ### Add
-This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact. When the contact is added successfully it asks the user if he wants to add another one.If yes, the fuction will call itself.
+This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact. When the contact is added successfully it asks the user if he wants to add another one.If yes, the function will call itself.
 It validates the user input. It keeps asking the user if he enters invalid input. It uses for that three helping functions  [`validDate()`](#validdate), [`validEmail()`](#validemail), and [`validPhone()`](#validphone). 
 
 > Note: You can click on any of the helping functions for more information.
@@ -417,7 +419,7 @@ In case of the contact not found:
 ![Delete](img/delete2.png)
 
 ### Modify
-This function asks the user for the last name of the contact he/she wants to modify and searches for it. It achieves that by looping through all contacts and saving the indices of matching contacts in an array of type integer. If the number of items in the array is one, it calls [`modifyContact()`](#modifyContact) and lets the user modify the contact directly plus prints that contact's new information. But if the number of items in the array is more than one, a menu having all the contacts that matched last name will be displayed and the user can choose the contact to be modified. Then the user will be asked to enter the number corressponding to the contact he/she wants to modify from that menu. If a contact is successfully specidied, the [`modifyContact()`](#modifyContact) function will be called. [`modifyContact()`](#modifyContact) is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages. If no contact is specified, **item not found** message if displayed and the function ends and no contact is modified.
+This function asks the user for the last name of the contact he/she wants to modify and searches for it. It achieves that by looping through all contacts and saving the indices of matching contacts in an array of type integer. If the number of items in the array is one, it calls [`modifyContact()`](#modifyContact) and lets the user modify the contact directly plus prints that contact's new information. But if the number of items in the array is more than one, a menu having all the contacts that matched last name will be displayed and the user can choose the contact to be modified. Then the user will be asked to enter the number corressponding to the contact he/she wants to modify from that menu. If a contact is successfully specified, the [`modifyContact()`](#modifyContact) function will be called. [`modifyContact()`](#modifyContact) is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages. If no contact is specified, **item not found** message if displayed and the function ends and no contact is modified.
 
 #### Code:
 ```C
@@ -471,7 +473,7 @@ void modify()
         modifyContact(items[num - 1]);
     }
     else
-        error("Error! Item not found.\n");
+        error("Error! Contact not found.\n");
 }
 ```
 #### Sample Runs:
@@ -728,7 +730,7 @@ void error(char message[])
 }
 ```
 ##### Sample Run:
-
+![Error](img/errorImg.png)
 
 #### success
 It prints green colored text which is used in printing success messages.
@@ -740,6 +742,8 @@ void success(char message[])
     printf("\033[0;32m%s\033[0m", message);
 }
 ```
+##### Sample Runs:
+![succes message](img/success.png)
 
 #### pause
 This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used, the user won't be able to read the changes he/she made since the `menu()` function will clear the screen immediately.
@@ -752,9 +756,11 @@ void pause()
     getchar();
 }
 ```
+##### Sample Runs:
+![pause](img/pause.png)
 
 #### getCurrentYear
-This function returns the current year which helps in validating date input.
+This function returns the current year which helps in validating date input. It works by including time.h header file and making variable of type `time_t` 
 ##### Code:
 ```C
 int getCurrentYear()
