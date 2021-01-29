@@ -42,16 +42,17 @@ void menu();
 void sortByLastName();
 void sortByDate();
 
-int compareNames(const void *pa, const void *pb);
 void error(char message[]);
 void success(char message[]);
 void pause();
 int getCurrentYear();
 void printContacts(Contact arr[], int size);
 void printOneContact(Contact arr[], int index);
+void modifyContact(int index);
 bool validDate(char date[], int count);
 bool validPhone(char num[]);
 bool validEmail(char email[]);
+int compareNames(const void *pa, const void *pb);
 bool compareDates(BirthDate date1, BirthDate date2);
 
 // Global Variables:
@@ -114,7 +115,6 @@ void query()
     }
     if (!found)
         error("Person not found!\n");
-    
 }
 
 void add()
@@ -211,7 +211,6 @@ void modify()
     int itemsCount = 0; // Stores index
     char lastName[MAXSTRING];
     char input[10];
-    char date[MAXSTRING];
 
     printf("Enter the last name of the person: ");
     scanf("%99s", lastName);
@@ -225,39 +224,9 @@ void modify()
         }
     }
 
+    // handles input from the user and modifies the contact
     if (itemsCount == 1)
-    {
-        printf("Contact to be modified: ");
-        printOneContact(contacts, items[0]);
-        printf("Enter new last name: ");
-        scanf("%99s", contacts[items[0]].lastName);
-        printf("Enter new first name: ");
-        scanf("%99s", contacts[items[0]].firstName);
-        printf("Enter new address: ");
-        fgets(contacts[items[0]].address, MAXSTRING, stdin);
-        scanf("%99[^\n]%*c", contacts[items[0]].address);
-
-        do
-        {
-            printf("Enter Birth Day (dd-mm-yyyy): ");
-            scanf("%99s", date);
-        } while (!validDate(date, items[0]));
-
-        do
-        {
-            printf("Enter new phone number: ");
-            scanf("%99s", contacts[items[0]].number);
-        } while (!validPhone(contacts[items[0]].number));
-
-        do
-        {
-            printf("Enter new email: ");
-            scanf("%99s", contacts[items[0]].email);
-
-        } while (!validEmail(contacts[items[0]].email));
-        success("Item modified successfully\n");
-    }
-
+        modifyContact(items[0]);
     else if (itemsCount > 1)
     {
         printf("\nChoose an item to delete (Enter a number):\n");
@@ -282,40 +251,11 @@ void modify()
             printf("Error! Unexpected input. ");
             pause();
         }
-        printf("Contact to be modified: ");
-        printOneContact(contacts, items[num - 1]);
-        printf("Enter new last name: ");
-        scanf("%99s", contacts[items[num - 1]].lastName);
-        printf("Enter new First name: ");
-        scanf("%99s", contacts[items[num - 1]].firstName);
-        printf("Enter new address: ");
-        fgets(contacts[items[num - 1]].address, MAXSTRING, stdin);
-        scanf("%99[^\n]%*c", contacts[items[num - 1]].address);
-
-        do
-        {
-            printf("Enter Birth Day (dd-mm-yyyy): ");
-            scanf("%99s", date);
-        } while (!validDate(date, items[num - 1]));
-
-        do
-        {
-            printf("Enter new phone number: ");
-            scanf("%99s", contacts[items[num - 1]].number);
-        } while (!validPhone(contacts[items[num - 1]].number));
-
-        do
-        {
-            printf("Enter new email: ");
-            scanf("%99s", contacts[items[num - 1]].email);
-        } while (!validEmail(contacts[items[num - 1]].email));
-
-        success("Item modified successfully\n");
+        // handles input from the user and modifies the contact
+        modifyContact(items[num - 1]);
     }
     else
-    {
         error("Error! Item not found.\n");
-    }
 }
 
 void printMenu()
@@ -485,6 +425,40 @@ void menu()
         pause();
         break;
     }
+}
+
+void modifyContact(int index)
+{
+    char date[MAXSTRING];
+    printf("Contact to be modified: ");
+    printOneContact(contacts, index);
+    printf("Enter new last name: ");
+    scanf("%99s", contacts[index].lastName);
+    printf("Enter new first name: ");
+    scanf("%99s", contacts[index].firstName);
+    printf("Enter new address: ");
+    fgets(contacts[index].address, MAXSTRING, stdin);
+    scanf("%99[^\n]%*c", contacts[index].address);
+
+    do
+    {
+        printf("Enter Birth Day (dd-mm-yyyy): ");
+        scanf("%99s", date);
+    } while (!validDate(date, index));
+
+    do
+    {
+        printf("Enter new phone number: ");
+        scanf("%99s", contacts[index].number);
+    } while (!validPhone(contacts[index].number));
+
+    do
+    {
+        printf("Enter new email: ");
+        scanf("%99s", contacts[index].email);
+
+    } while (!validEmail(contacts[index].email));
+    success("Item modified successfully\n");
 }
 
 void printContacts(Contact arr[], int size)
