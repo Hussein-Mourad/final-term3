@@ -82,7 +82,7 @@
       - [compareNames](#comparenames)
         - [Code:](#code-22)
       - [compareDates](#comparedates)
-        - [Code:](#code-22)
+        - [Code:](#code-23)
 
 ## User Guide
 
@@ -985,7 +985,7 @@ int compareNames(const void *pa, const void *pb)
 
 #### compareDates
 This function is used in [`sortByDate()`](#sort-by-date). It compares two dates and determines which date is before the other. It returns **true** if the second date is before the first date, or returns **false** if both dates are equal or if the second date is after the first date.
-##### Codes:
+##### Code:
 ```C
 bool compareDates(BirthDate date1, BirthDate date2)
 {
