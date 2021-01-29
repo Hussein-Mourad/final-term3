@@ -458,7 +458,7 @@ void modifyContact(int index)
         scanf("%99s", contacts[index].email);
 
     } while (!validEmail(contacts[index].email));
-    success("Item modified successfully\n");
+    success("Contact modified successfully\n");
 }
 
 void printContacts(Contact arr[], int size)

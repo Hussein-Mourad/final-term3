@@ -656,7 +656,7 @@ In Case of invalid input
 
 This function sorts the global array of Contacts by last name with the help of the built-in function `qsort()`. `qsort()` itself needs a helping function. So, [`compareNames()`](#comparenames) function is that helping function.  
 The role of [`compareNames()`](#comparenames) function is to compare two items and return an integer value less than zero if the first item is less than second item , return zero if both items are equal, or return an integer value more than zero if the first item is greater than second item.
-> You can find sample runs for this function in [Print](#print-1) section above
+> You can find sample runs for this function in [Print](#print-1) section above. 
 > Note: You can click on the name of the helping functions for more information.
 #### Code:
 ```C
@@ -679,7 +679,7 @@ This function sorts the global array of contacts by date of birth. It uses bubbl
 
 The way it works is by taking to dates it returns true if the first date is later than the second one else it returns false. It compares the two years if they doesn't match then it returns true. If the year matches and months don't then it returns true. Finally if the year and month are the same and day don't match then it returns true else it returns false as the second date is smaller than or equal the first.
 
-> You can find sample runs for this function in [Print](#print-1) section above
+> You can find sample runs for this function in [Print](#print-1) section above. 
 > Note: You can click on the name of the helping functions for more information.
 #### Code:
 ```C
@@ -846,7 +846,7 @@ void modifyContact(int index)
         scanf("%99s", contacts[index].email);
 
     } while (!validEmail(contacts[index].email));
-    success("Item modified successfully\n");
+    success("Contact modified successfully\n");
 }
 ```
 
