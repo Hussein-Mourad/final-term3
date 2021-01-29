@@ -71,10 +71,11 @@
         - [Sample Runs:](#sample-runs-6)
       - [getCurrentYear](#getcurrentyear)
         - [Code:](#code-15)
-      - [printContacts](#printcontacts)
-        - [Code:](#code-16)
-      - [printOneContact](#printonecontact)
-        - [Code:](#code-17)
+    - [printContacts](#printcontacts)
+      - [Code:](#code-16)
+      - [Sample Run:](#sample-run-3)
+    - [printOneContact](#printonecontact)
+      - [Code:](#code-17)
       - [modifyContact](#modifycontact)
         - [Code:](#code-18)
       - [validDate](#validdate)
@@ -720,6 +721,7 @@ void sortByDate()
 
 ```
 ### Utility functions:
+
 #### error
 It prints red colored text which is used in printing error messages.
 ##### Code:
@@ -760,7 +762,7 @@ void pause()
 ![pause](img/pause.png)
 
 #### getCurrentYear
-This function returns the current year which helps in validating date input. It works by including time.h header file and making variable of type `time_t` 
+This function returns the current year which helps in validating date input. It uses time.h to get the current year.
 ##### Code:
 ```C
 int getCurrentYear()
@@ -775,9 +777,9 @@ int getCurrentYear()
 }
 ```
 
-#### printContacts
+### printContacts
 This function prints all the elements of an array of type Contact. The integer **size** specifies the number of elements of that array to be printed.
-##### Code:
+#### Code:
 ```C
 void printContacts(Contact arr[], int size)
 {
@@ -798,9 +800,13 @@ void printContacts(Contact arr[], int size)
 }
 ```
 
-#### printOneContact
+#### Sample Run:
+![print](img/printContacts.png)
+
+### printOneContact
 This function prints an element of an array of type Contact. The integer **index** specifies that element.
-##### Code:
+    
+#### Code:
 ```C
 void printOneContact(Contact arr[], int index)
 {
