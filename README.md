@@ -302,6 +302,7 @@ void query()
 }
 ```
 #### Sample Run:
+
 ![Query sample run](img/query1.png "Query sample run")
 
 Multiple Cases:
