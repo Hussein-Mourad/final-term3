@@ -34,9 +34,31 @@
       - [Code:](#code-5)
       - [Sample Runs:](#sample-runs-2)
     - [Modify](#modify-1)
-    - [Print](#print-1)
       - [Code:](#code-6)
+      - [Sample Runs:](#sample-runs-3)
+    - [Print](#print-1)
+      - [Code:](#code-7)
       - [Sample Run:](#sample-run-1)
+    - [Save](#save-1)
+    - [Code:](#code-8)
+    - [Quit](#quit-1)
+      - [Code:](#code-9)
+      - [Sample Runs:](#sample-runs-4)
+    - [Sort by last name](#sort-by-last-name)
+      - [Code:](#code-10)
+    - [Sort by date](#sort-by-date)
+      - [Code:](#code-11)
+    - [Utility functions:](#utility-functions)
+    - [error](#error)
+      - [Code](#code-12)
+    - [success](#success)
+      - [Code](#code-13)
+    - [pause](#pause)
+      - [Code](#code-14)
+    - [getCurrentYear](#getcurrentyear)
+      - [Code](#code-15)
+    - [printContacts](#printcontacts)
+      - [Code](#code-16)
 
 
 
@@ -373,10 +395,83 @@ In case of the contact not found:
 ![Delete](img/delete2.png)
 
 ### Modify
-This function asks the user for the last name he wants to modify and searches for it. if it found one contact it lets the user modify it directly and prints the contact information but if it founds more than one contact it shows a menu where the user chooses which contact he want to modify
+This function asks the user for the last name he wants to modify and searches for it. if it found one contact it lets the user modify it directly plus prints the contact information but if it founds more than one contact it shows a menu where the user chooses which contact he want to modify. 
+It achieves that by looping through all contacts and saving the indices of matching contacts in an array. if the number of items in the array is one it modifies the contact directly else it prints a menu where the user can choose the contact to be deleted. it utilizes a function called [`modifyContact`](#modifyContact) which is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages.
+
+#### Code:
+```C
+void modify()
+{
+    int items[MAXCONTACTS];
+    int itemsCount = 0; // Stores index
+    char lastName[MAXSTRING];
+    char input[10];
+
+    printf("Enter the last name of the person: ");
+    scanf("%99s", lastName);
+
+    for (i = 0; i < Count; i++)
+    {
+        if (strcmp(lastName, contacts[i].lastName) == 0)
+        {
+            items[itemsCount] = i;
+            itemsCount++;
+        }
+    }
+
+    // handles input from the user and modifies the contact
+    if (itemsCount == 1)
+        modifyContact(items[0]);
+    else if (itemsCount > 1)
+    {
+        printf("\nChoose an item to delete (Enter a number):\n");
+        for (i = 0; i < itemsCount; i++)
+            printf("(%d) %s,%s,%d-%d-%d,%s,%s,%s\n",
+                   (i + 1),
+                   contacts[items[i]].lastName,
+                   contacts[items[i]].firstName,
+                   contacts[items[i]].date.day,
+                   contacts[items[i]].date.month,
+                   contacts[items[i]].date.year,
+                   contacts[items[i]].address,
+                   contacts[items[i]].number,
+                   contacts[items[i]].email);
+
+        scanf("%s", input);
+
+        int num = atoi(input);
+
+        if (num == 0 || num > itemsCount + 1)
+        {
+            printf("Error! Unexpected input. ");
+            pause();
+        }
+        // handles input from the user and modifies the contact
+        modifyContact(items[num - 1]);
+    }
+    else
+        error("Error! Item not found.\n");
+}
+```
+#### Sample Runs:
+
+In case of one result:
+
+![Modify](img/modify1.png)
+
+In case of multiple results:
+
+![Modify](img/modify2.png)
+
+In case that contact not found:
+
+![Modify](img/modify3.png)
 
 ### Print
-It prints a menu where the user can choose from printing contacts normally, sorted by last name, or sorted by date of birth. It validates user input
+It prints a menu where the user can choose from printing contacts normally, sorted by last name, or sorted by date of birth. It validates user input.
+It achieves that by defining a 2d array which holds menu items so we can easily loop through them. Then according to the user input it calls the appropriate helping function. [`printContaxts()`](#print-contacts), [`sortByLastName()`](#sort-by-last-name) or [`sortByDate()`](#sort-by-date)
+> Note: You can click on the function name to reference it.
+
 #### Code:
 
 ```C
@@ -429,9 +524,233 @@ void printMenu()
 ![print sample run](img/printError.png)
 
 
-Save
-This function saves all the information of all the contacts in a file. It simply writes all what is inside the global array of Contacts into the same file used in Load() function.
-Quit 
-This function simply allows the user to quit from the program if he/she wants. It first displays a warning message if any modification is done on the global array of Contacts and that modification isn’t saved. If that modification is saved before entering the Quit() function, then no warning message will be displayed. If no modification occurred at all, then again no warning message will be displayed. Then the user is asked “Are you sure you want to quit(y/n)?”. The function keeps asking the user to enter a valid input if the input isn’t “y” or “n”. If “y”, the program ends. If “n”, the program will return to Menu() function.
-Sort by last name
-This function sorts the global array of Contacts by last name with the help of the built-in function qsort(). qsort() itself needs a helping function. So, compareNames() function is that helping function.  The role of compareNames() function is to compare two items and return an integer value less than zero if the first item is less than second item , return zero if both items are equal, or return an integer value more than zero if the first item is greater than second item.
+### Save
+This function saves all the information of all the contacts in a file. It achieves that by writing all what is inside the global array of Contacts into the same file used in `load()` function.
+### Code:
+```C
+void save()
+{
+    FILE *f;
+    f = fopen(FILENAME, "w");
+    for (i = 0; i < Count; i++)
+    {
+        fprintf(f, "%s,%s,%d-%d-%d,%s,%s,%s\n",
+                contacts[i].lastName,
+                contacts[i].firstName,
+                contacts[i].date.day,
+                contacts[i].date.month,
+                contacts[i].date.year,
+                contacts[i].address,
+                contacts[i].number,
+                contacts[i].email);
+    }
+    fclose(f);
+    success("\nContacts saved successfully");
+}
+```
+
+### Quit 
+This function  allows the user to quit from the program.It first checks if there is any modification is done as it prints a warning message. If all modifications are saved before entering the `Quit()` function, then no warning message will be displayed. Then the user is asked if he want to quit. The function keeps asking the user to enter a valid input. 
+It achieves that by reading all the contents of the file into an array of contacts and compares its count to the global one. If they aren't the same then the user definitely has unsaved changes if their count is the same then it the two arrays element by element. if it founds a difference then the user modified a contact so it also displays a warning message.
+After that it asks the user if he wants to quit and checks for valid input.
+
+#### Code:
+```C
+void quit()
+{
+    FILE *f;
+    Contact tmpContacts[MAXCONTACTS];
+    int tmpCount = 0;
+    char input[10];
+    bool flag = false;
+
+    f = fopen(FILENAME, "r");
+
+    while (!feof(f))
+    { // %100[^,], Reads at most 100 character or until a comma is encountered
+        fscanf(f, "%99[^,],", tmpContacts[tmpCount].lastName);
+        fscanf(f, "%99[^,],", tmpContacts[tmpCount].firstName);
+        fscanf(f, "%2d-%2d-%4d,",
+               &tmpContacts[tmpCount].date.day,
+               &tmpContacts[tmpCount].date.month,
+               &tmpContacts[tmpCount].date.year);
+        fscanf(f, "%99[^,],", tmpContacts[tmpCount].address);
+        fscanf(f, "%15[^,],", tmpContacts[tmpCount].number);
+        fscanf(f, "%99s\n", tmpContacts[tmpCount].email);
+        tmpCount++;
+    }
+    fclose(f);
+
+    if (tmpCount != Count)
+        error("Warning: You have unsaved data that will be lost.\n");
+
+    else if (tmpCount == Count)
+    {
+        for (i = 0; i < Count; i++)
+        {
+            // Compares contacts
+            if (strcmp(contacts[i].firstName, tmpContacts[i].firstName) ||
+                strcmp(contacts[i].lastName, tmpContacts[i].lastName) ||
+                contacts[i].date.day != tmpContacts[i].date.day ||
+                contacts[i].date.month != tmpContacts[i].date.month ||
+                contacts[i].date.year != tmpContacts[i].date.year ||
+                strcmp(contacts[i].address, tmpContacts[i].address) ||
+                strcmp(contacts[i].number, tmpContacts[i].number) ||
+                strcmp(contacts[i].email, tmpContacts[i].email))
+            {
+                flag = true;
+                break;
+            }
+        }
+        if (flag)
+            error("Warning: You have unsaved data that will be lost.\n");
+    }
+
+    printf("Are you sure you want to quit? (y/n) ");
+    scanf("%s", input);
+    if (strcmp(input, "y") && strcmp(input, "n"))
+    {
+        error("\nError! Unexpected input.\n");
+        pause();
+    }
+
+    if (strcmp(input, "y") == 0)
+        exit(0);
+}
+```
+
+#### Sample Runs:
+In Case of no changes are made:
+![print sample run](img/quit1.png)
+
+In Case of changes:
+
+![print sample run](img/quit2.png)
+
+
+In Case of invalid input
+
+![print sample run](img/quit3.png)
+
+### Sort by last name
+
+This function sorts the global array of Contacts by last name with the help of the built-in function `qsort()`. `qsort()` itself needs a helping function. So, `compareNames()` function is that helping function.  
+The role of `compareNames()` function is to compare two items and return an integer value less than zero if the first item is less than second item , return zero if both items are equal, or return an integer value more than zero if the first item is greater than second item.
+> You can find sample runs for this function in [Print](#print-1) section above
+
+#### Code:
+```C
+int compareNames(const void *pa, const void *pb)
+{
+    const Contact *p1 = pa;
+    const Contact *p2 = pb;
+    return strcmp(p1->lastName, p2->lastName);
+}
+
+void sortByLastName()
+{
+    qsort(contacts, Count, sizeof(Contact), compareNames);
+    printContacts(contacts, Count);
+}
+```
+
+### Sort by date
+This function sorts the global array of contacts by date of birth. It uses bubble sort to sort the array but it relies on a function `compareDates()` to compare dates. 
+
+The way it works is by taking to dates it returns true if the first date is later than the second one else it returns false. It compares the two years if they doesn't match then it returns true. If the year matches and months don't then it returns true. Finally if the year and month are the same and day don't match then it returns true else it returns false as the second date is smaller than or equal the first.
+
+> You can find sample runs for this function in [Print](#print-1) section above
+
+#### Code:
+```C
+bool compareDates(BirthDate date1, BirthDate date2)
+{
+    // All cases when true should be returned
+    if (date1.year > date2.year)
+        return true;
+    if (date1.year == date2.year && date1.month > date2.month)
+        return true;
+    if (date1.year == date2.year && date1.month == date2.month &&
+        date1.day > date2.day)
+        return true;
+    // If none of the above cases satisfy, return false
+    return false;
+}
+
+void sortByDate()
+{
+    for (i = 0; i < Count - 1; i++)
+    {
+        // Last i elements are already in place
+        for (j = 0; j < Count - i - 1; j++)
+        {
+            if (compareDates(contacts[j].date, contacts[j + 1].date))
+            {
+                Contact temp;
+                temp = contacts[j];
+                contacts[j] = contacts[j + 1];
+                contacts[j + 1] = temp;
+            }
+        }
+    }
+    printContacts(contacts, Count);
+}
+
+```
+### Utility functions:
+### error
+It prints red colored text which is used in printing error messages.
+#### Code
+```C
+void error(char message[])
+{
+    printf("\033[1;31m%s\033[0m", message);
+}
+```
+### success
+It prints green colored text which is used in printing success messages.
+
+#### Code
+```C
+void success(char message[])
+{
+    printf("\033[0;32m%s\033[0m", message);
+}
+```
+### pause
+This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used `menu()` function will clear the screen immediately.
+
+#### Code
+```C
+void pause()
+{
+    getchar();
+    printf("\nPress Enter to Continue...");
+    getchar();
+}
+
+```
+
+### getCurrentYear
+This function returns the current year which helps in validating date input.
+
+#### Code
+```C
+int getCurrentYear()
+{
+    time_t s;
+    struct tm *currentTime;
+    int CURRENTYEAR;
+    s = time(NULL);
+    currentTime = localtime(&s);
+    CURRENTYEAR = currentTime->tm_year + 1900;
+    return CURRENTYEAR;
+}
+```
+
+### printContacts
+
+#### Code
+```C
+
+```
