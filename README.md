@@ -40,7 +40,7 @@
       - [Code:](#code-7)
       - [Sample Run:](#sample-run-1)
     - [Save](#save-1)
-    - [Code:](#code-8)
+      - [Code:](#code-8)
     - [Quit](#quit-1)
       - [Code:](#code-9)
       - [Sample Runs:](#sample-runs-4)
@@ -49,23 +49,30 @@
     - [Sort by date](#sort-by-date)
       - [Code:](#code-11)
     - [Utility functions:](#utility-functions)
-    - [error](#error)
-      - [Code](#code-12)
-    - [success](#success)
-      - [Code](#code-13)
-    - [pause](#pause)
-      - [Code](#code-14)
-    - [getCurrentYear](#getcurrentyear)
-      - [Code](#code-15)
-    - [printContacts](#printcontacts)
-      - [Code](#code-16)
-    - [printOneContact](#printonecontact)
-      - [Code](#code-17)
-    - [modifyContact](#modifycontact)
-      - [Code](#code-18)
-    - [validDate](#validdate)
-      - [Code](#code-19)
-      
+      - [error](#error)
+        - [Code](#code-12)
+      - [success](#success)
+        - [Code](#code-13)
+      - [pause](#pause)
+        - [Code](#code-14)
+      - [getCurrentYear](#getcurrentyear)
+        - [Code](#code-15)
+      - [printContacts](#printcontacts)
+        - [Code](#code-16)
+      - [printOneContact](#printonecontact)
+        - [Code](#code-17)
+      - [modifyContact](#modifycontact)
+        - [Code](#code-18)
+      - [validDate](#validdate)
+        - [Code](#code-19)
+      - [validPhone](#validphone)
+        - [Code](#code-20)
+      - [validEmail](#validemail)
+        - [Code](#code-21)
+      - [compareNames](#comparenames)
+        - [Code](#code-22)
+      - [compareDates](#comparedates)
+        - [Code](#code-23)
 
 ## User Guide
 
@@ -712,6 +719,7 @@ void error(char message[])
     printf("\033[1;31m%s\033[0m", message);
 }
 ```
+
 #### success
 It prints green colored text which is used in printing success messages.
 ##### Code
@@ -721,8 +729,9 @@ void success(char message[])
     printf("\033[0;32m%s\033[0m", message);
 }
 ```
+
 #### pause
-This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used `menu()` function, the user won't be able to read the changes he did since the `menu()` function will clear the screen immediately.
+This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used, the user won't be able to read the changes he/she made since the `menu()` function will clear the screen immediately.
 ##### Code
 ```C
 void pause()
@@ -731,8 +740,8 @@ void pause()
     printf("\nPress Enter to Continue...");
     getchar();
 }
-
 ```
+
 #### getCurrentYear
 This function returns the current year which helps in validating date input.
 ##### Code
@@ -748,8 +757,9 @@ int getCurrentYear()
     return CURRENTYEAR;
 }
 ```
-#### printContacts
 
+#### printContacts
+This function prints all the elements of an array of type Contact. The integer **size** specifies the number of elements of that array to be printed.
 ##### Code
 ```C
 void printContacts(Contact arr[], int size)
@@ -770,8 +780,9 @@ void printContacts(Contact arr[], int size)
     }
 }
 ```
-#### printOneContact
 
+#### printOneContact
+This function prints an element of an array of type Contact. The integer **index** specifies that element.
 ##### Code
 ```C
 void printOneContact(Contact arr[], int index)
@@ -787,8 +798,9 @@ void printOneContact(Contact arr[], int index)
            arr[index].email);
 }
 ```
-#### modifyContact
 
+#### modifyContact
+This fuction modifies all the information of an existing contact. The new date of birth, phone, and email will be validated using the [validDate](#validdate), [validPhone](#validphone), and [validEmail](#validemail) respectively.
 ##### Code
 ```C
 void modifyContact(int index)
@@ -825,8 +837,9 @@ void modifyContact(int index)
     success("Item modified successfully\n");
 }
 ```
-#### validDate
 
+#### validDate
+This fuction validates the date. First it checks that the day is from 1 to 31, month is from 1 to 12, and year is from 1900 to current year. If no, it stops immediately and an **invalid date** message is displayed and the function returns **false**. If yes, it continues and checks all the cases for which the date is invalid.Examples of invalid dates are 29-2-2001, 30-2-2000, 31-4-2001, and 31-5-2111. If the entered date matched any of those cases for which the date is invalid, then the checking stops immediately and an **invalid date** message is displayed and the function returns **false**. However, if the entered date didn't match any of those cases then the date is valid and is stored successfully and the function returns **true**.
 ##### Code
 ```C
 bool validDate(char date[], int count)
@@ -906,8 +919,9 @@ bool validDate(char date[], int count)
     return true;
 }
 ```
-#### validPhone
 
+#### validPhone
+This function validates the entered phone number. The entered number must be from 7 to 15 character and all these characters must be integers from 0 to 9. If not, an **invalid phone number** message is displayed and the function returns **false**. Else, the number is succeefully stored and the function returns **true**.
 ##### Code
 ```C
 bool validPhone(char num[])
@@ -925,8 +939,9 @@ bool validPhone(char num[])
     return true;
 }
 ```
-#### validEmail
 
+#### validEmail
+This function validates the entered email. The entered email must be on the form **name@domain.com**. If not, an **invalid email** message is displayed and the function returns **false**. Else, the email is successfully stored and the function returns **true**.
 ##### Code
 ```C
 bool validEmail(char email[])
@@ -949,8 +964,9 @@ bool validEmail(char email[])
     return false;
 }
 ```
-#### compareNames
 
+#### compareNames
+This function is the helping function of the built-in qsort() function that is used in [Sort by last name](#sort-by-last-name) function. It compares two names and returns an integer value less than zero if the first name is less than second name, returns zero if both names are equal, or returns an integer value more than zero if the first name is greater than second name.
 ##### Code
 ```C
 int compareNames(const void *pa, const void *pb)
@@ -960,8 +976,9 @@ int compareNames(const void *pa, const void *pb)
     return strcmp(p1->lastName, p2->lastName);
 }
 ```
-#### compareDates
 
+#### compareDates
+This function is used in [Sort by date](#sort-by-date). It compares two dates and determines which date is before the other. It returns **true** if the second date is before the first date, or returns **false** if both dates are equal or if the second date is after the first date.
 ##### Codes
 ```C
 bool compareDates(BirthDate date1, BirthDate date2)
