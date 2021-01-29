@@ -302,6 +302,11 @@ void query()
 ```
 #### Sample Run:
 ![Query sample run](img/query1.png "Query sample run")
+
+Multiple Cases:
+![Query sample run](img/query3.png "Query sample run")
+
+Error:
 ![Query sample run](img/query2.png "Query sample run")
 
 ### Add
@@ -805,7 +810,7 @@ void printContacts(Contact arr[], int size)
 
 ### printOneContact
 This function prints an element of an array of type Contact. The integer **index** specifies that element.
-    
+
 #### Code:
 ```C
 void printOneContact(Contact arr[], int index)
