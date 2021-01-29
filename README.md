@@ -152,7 +152,7 @@ int k = 0;
 ```
 
 ### Menu
-This is the most important function as it helps the user navigate through the program with ease. It starts of by clearing the screen and then it renders a menu where the user can choose from several options. It also Checks for invalid input.
+This is the most important function as it helps the user navigate through the program with ease. It starts off by clearing the screen and then it renders a menu where the user can choose from several options. It also Checks for invalid input.
 
 #### Code:
 ```C
@@ -214,7 +214,7 @@ void menu()
 #### Sample Runs:
 ![code-run](img/menu1.png "Code Run")
 
-**Error Handling**
+**Error Handling in Menu**
 
 ![code-run](img/menu2.png "Code Run")
 
@@ -250,7 +250,7 @@ void load()
 ```
 
 ### Query
-This functions asks the user for last name of the contacts he is searching for and prints all matching results. It uses a function called [`printOneContact()`](#printOneContact) to print the contact or contacts found
+This function asks the user for last name of the contact(s) he/she is searching for and prints all matching results. It uses a function called [`printOneContact()`](#printOneContact) to print the contact(s) found.
 > Note: You can click on the function name to reference its details.
 #### Code:
 ```C
@@ -279,7 +279,7 @@ void query()
 ![Query sample run](img/query2.png "Query sample run")
 
 ### Add
-This Function adds a contact to the phone book it asks the user for last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address. When the contact is added successfully it asks the user it he wants to add another one. 
+This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact.The date of birth, phone number, and email address wil be validated using [`printOneContact()`](#printOneContact). When the contact is added successfully it asks the user if he wants to add another one.If yes, the fuction will call itself.
 
 It validates the user input. It keeps asking the user if he enters invalid input. It uses for that three helping functions  [`validDate()`](#valid-date), [`validEmail()`](#valid-email), and [`validPhone()`](#valid-phone). 
 
@@ -698,29 +698,27 @@ void sortByDate()
 
 ```
 ### Utility functions:
-### error
+#### error
 It prints red colored text which is used in printing error messages.
-#### Code
+##### Code
 ```C
 void error(char message[])
 {
     printf("\033[1;31m%s\033[0m", message);
 }
 ```
-### success
+#### success
 It prints green colored text which is used in printing success messages.
-
-#### Code
+##### Code
 ```C
 void success(char message[])
 {
     printf("\033[0;32m%s\033[0m", message);
 }
 ```
-### pause
-This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used `menu()` function will clear the screen immediately.
-
-#### Code
+#### pause
+This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used `menu()` function, the user won't be able to read the changes he did since the `menu()` function will clear the screen immediately.
+##### Code
 ```C
 void pause()
 {
@@ -730,11 +728,9 @@ void pause()
 }
 
 ```
-
-### getCurrentYear
+#### getCurrentYear
 This function returns the current year which helps in validating date input.
-
-#### Code
+##### Code
 ```C
 int getCurrentYear()
 {
@@ -747,10 +743,233 @@ int getCurrentYear()
     return CURRENTYEAR;
 }
 ```
+#### printContacts
 
-### printContacts
-
-#### Code
+##### Code
 ```C
+void printContacts(Contact arr[], int size)
+{
+    printf("\n(Last,First,Date,Address,Number,Email)\n");
 
+    for (i = 0; i < size; i++)
+    {
+        printf("%s,%s,%d-%d-%d,%s,%s,%s\n",
+               arr[i].lastName,
+               arr[i].firstName,
+               arr[i].date.day,
+               arr[i].date.month,
+               arr[i].date.year,
+               arr[i].address,
+               arr[i].number,
+               arr[i].email);
+    }
+}
+```
+#### printOneContact
+
+##### Code
+```C
+void printOneContact(Contact arr[], int index)
+{
+    printf("%s,%s,%d-%d-%d,%s,%s,%s\n",
+           arr[index].lastName,
+           arr[index].firstName,
+           arr[index].date.day,
+           arr[index].date.month,
+           arr[index].date.year,
+           arr[index].address,
+           arr[index].number,
+           arr[index].email);
+}
+```
+#### modifyContact
+
+##### Code
+```C
+void modifyContact(int index)
+{
+    char date[MAXSTRING];
+    printf("Contact to be modified: ");
+    printOneContact(contacts, index);
+    printf("Enter new last name: ");
+    scanf("%99s", contacts[index].lastName);
+    printf("Enter new first name: ");
+    scanf("%99s", contacts[index].firstName);
+    printf("Enter new address: ");
+    fgets(contacts[index].address, MAXSTRING, stdin);
+    scanf("%99[^\n]%*c", contacts[index].address);
+
+    do
+    {
+        printf("Enter Birth Day (dd-mm-yyyy): ");
+        scanf("%99s", date);
+    } while (!validDate(date, index));
+
+    do
+    {
+        printf("Enter new phone number: ");
+        scanf("%99s", contacts[index].number);
+    } while (!validPhone(contacts[index].number));
+
+    do
+    {
+        printf("Enter new email: ");
+        scanf("%99s", contacts[index].email);
+
+    } while (!validEmail(contacts[index].email));
+    success("Item modified successfully\n");
+}
+```
+#### validDate
+
+##### Code
+```C
+bool validDate(char date[], int count)
+{
+    long int dateLength = strlen(date); // stores the length of date
+    int dashCount = 0;
+    char *token;
+    int day, month, year;
+
+    if (dateLength < 8 || dateLength > 10)
+    {
+        error("Error! Invalid Date entry.\n");
+        return false;
+    }
+    for (i = 0; i < dateLength; i++)
+    {
+        if (date[i] == '-')
+            dashCount++;
+    }
+
+    if (dashCount != 2)
+    {
+        error("Invalid Date format!\n");
+        return false;
+    }
+
+    token = strtok(date, "-");
+    day = atoi(token);
+    // Converts date as string to day, month , year as int
+    for (i = 0; i <= 3; i++)
+    {
+        if (i == 1)
+            month = atoi(token);
+        else if (i == 2)
+            year = atoi(token);
+        token = strtok(NULL, "-");
+    }
+
+    if (day > 0 && day <= 31 && month > 0 && month <= 12 && year <= getCurrentYear() && year >= 1900)
+    {
+        // handles feb
+        if (month == 2)
+        {
+            if (day > 29)
+            {
+                error("Error! Invalid Date entry.\n");
+                return false;
+            }
+            else if (day == 29)
+            {
+                if (year % 4 != 0)
+                {
+                    error("Error! Invalid Date entry.\n");
+                    return false;
+                }
+            }
+        }
+        //handle months which has only 30 days
+        else if ((month == 4 || month == 6 ||
+                  month == 9 || month == 11) &&
+                 (day > 30))
+        {
+            error("Error! Invalid Date entry.\n");
+            return false;
+        }
+    }
+    else
+    {
+        error("Error! Invalid Date entry.\n");
+        return false;
+    }
+
+    contacts[count].date.day = day;
+    contacts[count].date.month = month;
+    contacts[count].date.year = year;
+
+    return true;
+}
+```
+#### validPhone
+
+##### Code
+```C
+bool validPhone(char num[])
+{
+
+    for (i = 0; i < strlen(num); i++)
+    {
+        if (!isdigit(num[i]) || strlen(num) < 7 || strlen(num) > 15)
+        {
+            error("Error! Invalid phone number.");
+            printf(" (phone number must between 7 and 15 digits and doesn't contain characters)\n");
+            return false;
+        }
+    }
+    return true;
+}
+```
+#### validEmail
+
+##### Code
+```C
+bool validEmail(char email[])
+{
+    int emailLength = strlen(email);
+    for (i = 0; i <= emailLength; i++)
+    {
+        if (i != 0 && email[i] == '@' && i != emailLength - 1)
+        {
+            for (j = i; j <= emailLength; j++)
+            {
+                if (j != i && email[j] == '.' && j != emailLength - 1)
+                    return true;
+            }
+        }
+    }
+
+    error("Error! Invalid email address.");
+    printf(" (Email must contain @ sign and domain name)\n");
+    return false;
+}
+```
+#### compareNames
+
+##### Code
+```C
+int compareNames(const void *pa, const void *pb)
+{
+    const Contact *p1 = pa;
+    const Contact *p2 = pb;
+    return strcmp(p1->lastName, p2->lastName);
+}
+```
+#### compareDates
+
+##### Codes
+```C
+bool compareDates(BirthDate date1, BirthDate date2)
+{
+    // All cases when true should be returned
+    if (date1.year > date2.year)
+        return true;
+    if (date1.year == date2.year && date1.month > date2.month)
+        return true;
+    if (date1.year == date2.year && date1.month == date2.month &&
+        date1.day > date2.day)
+        return true;
+    // If none of the above cases satisfy, return false
+    return false;
+}
 ```
