@@ -82,7 +82,7 @@
       - [compareNames](#comparenames)
         - [Code](#code-22)
       - [compareDates](#comparedates)
-        - [Code](#code-23)
+        - [Code](#code-22)
 
 ## User Guide
 
