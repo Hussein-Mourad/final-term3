@@ -1,15 +1,14 @@
 # Phone Book App
 ## Made By:
 
-- Hussein Kassem
-  - ID:...
+- Hussein Mourad Kassem
+  - ID: 6729
 - Ahmad Said Nouh
   - ID: 7086
-- Mohab...
-  - ID:...
-- Abdul....
-  - ID: ....
-
+- Mohab Ayman Abdelhamid
+  - ID: 7127
+- Abdelrahman Elsayed
+  - ID: 3953
 
 ## Contents:
 
@@ -301,8 +300,7 @@ void query()
 ![Query sample run](img/query2.png "Query sample run")
 
 ### Add
-This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact.The date of birth, phone number, and email address wil be validated using [`printOneContact()`](#printOneContact). When the contact is added successfully it asks the user if he wants to add another one.If yes, the fuction will call itself.
-
+This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact. When the contact is added successfully it asks the user if he wants to add another one.If yes, the fuction will call itself.
 It validates the user input. It keeps asking the user if he enters invalid input. It uses for that three helping functions  [`validDate()`](#valid-date), [`validEmail()`](#valid-email), and [`validPhone()`](#valid-phone). 
 
 > Note: You can click on any of the helping functions for more information.
@@ -359,8 +357,8 @@ void add()
 ![add sample run](img/add.png)
 
 ### Delete
-This function asks the user for the last and first name of the contact he wants to delete and delete all matching contacts. It achieves that by copying all the contacts that won't be deleted into a new array of contacts and updates the main global array of contacts and the global count for contacts
- In addition, It prints all deleted contacts so the user can get good indication that the contact is deleted. It gets help from [`printContacts()`](#printContact) function with prints all the contacts in the array. Also it gives error it the contact is not found.
+This function asks the user for the last and first name of the contact he wants to delete and delete all matching contacts. It achieves that by copying all the contacts that won't be deleted into a new array of contacts and updates the main global array of contacts and the global count for contacts.
+In addition, it prints deleted contact(s) so the user can get good indication that the contact is deleted. It gets help from [`printContacts()`](#printContact) function which prints all the contacts in the array. Also it gives error if the contact is not found.
 > Note: You can click on the function name to reference it.
 #### Code:
 ```C
@@ -417,8 +415,7 @@ In case of the contact not found:
 ![Delete](img/delete2.png)
 
 ### Modify
-This function asks the user for the last name he wants to modify and searches for it. if it found one contact it lets the user modify it directly plus prints the contact information but if it founds more than one contact it shows a menu where the user chooses which contact he want to modify. 
-It achieves that by looping through all contacts and saving the indices of matching contacts in an array. if the number of items in the array is one it modifies the contact directly else it prints a menu where the user can choose the contact to be deleted. it utilizes a function called [`modifyContact`](#modifyContact) which is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages.
+This function asks the user for the last name of the contact he/she wants to modify and searches for it. It achieves that by looping through all contacts and saving the indices of matching contacts in an array of type integer. If the number of items in the array is one, it calls [`modifyContact`](#modifyContact) and lets the user modify the contact directly plus prints that contact's new information. But if the number of items in the array is more than one, a menu having all the contacts that matched last name will be displayed and the user can choose the contact to be modified. Then the user will be asked to enter the number corressponding to the contact he/she wants to modify from that menu. If a contact is successfully specidied, the [`modifyContact`](#modifyContact) function will be called. [`modifyContact`](#modifyContact) is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages. If no contact is specified, **item not found** message if displayed and the function ends and no contact is modified.
 
 #### Code:
 ```C
@@ -572,9 +569,8 @@ void save()
 ```
 
 ### Quit 
-This function  allows the user to quit from the program.It first checks if there is any modification is done as it prints a warning message. If all modifications are saved before entering the `Quit()` function, then no warning message will be displayed. Then the user is asked if he want to quit. The function keeps asking the user to enter a valid input. 
-It achieves that by reading all the contents of the file into an array of contacts and compares its count to the global one. If they aren't the same then the user definitely has unsaved changes if their count is the same then it the two arrays element by element. if it founds a difference then the user modified a contact so it also displays a warning message.
-After that it asks the user if he wants to quit and checks for valid input.
+This function simply allows the user to quit from the program if he/she wants. It first displays a warning message if any modification is done on the global array of Contacts and that modification isn’t saved. If that modification is saved before entering the Quit() function, then no warning message will be displayed. If no modification occurred at all, then again no warning message will be displayed.It achieves that by reading all the contents of the file into an array of contacts and compares its count to the global one. If they aren't the same then the user definitely has unsaved changes. If their count is the same then it checks the two arrays element by element. If it founds a difference then the user modified a contact so it also displays a warning message.
+Then the user is asked “Are you sure you want to quit(y/n)?”. The function keeps asking the user to enter a valid input if the input isn’t “y” or “n”. If “y”, the program ends. If “n”, the program will return to `menu()` function.
 
 #### Code:
 ```C
@@ -656,10 +652,10 @@ In Case of invalid input
 
 ### Sort by last name
 
-This function sorts the global array of Contacts by last name with the help of the built-in function `qsort()`. `qsort()` itself needs a helping function. So, `compareNames()` function is that helping function.  
-The role of `compareNames()` function is to compare two items and return an integer value less than zero if the first item is less than second item , return zero if both items are equal, or return an integer value more than zero if the first item is greater than second item.
+This function sorts the global array of Contacts by last name with the help of the built-in function `qsort()`. `qsort()` itself needs a helping function. So, [`compareNames()`](#comparenames) function is that helping function.  
+The role of [`compareNames()`](#comparenames) function is to compare two items and return an integer value less than zero if the first item is less than second item , return zero if both items are equal, or return an integer value more than zero if the first item is greater than second item.
 > You can find sample runs for this function in [Print](#print-1) section above
-
+> Note: You can click on the name of the helping functions for more information.
 #### Code:
 ```C
 int compareNames(const void *pa, const void *pb)
@@ -677,12 +673,12 @@ void sortByLastName()
 ```
 
 ### Sort by date
-This function sorts the global array of contacts by date of birth. It uses bubble sort to sort the array but it relies on a function `compareDates()` to compare dates. 
+This function sorts the global array of contacts by date of birth. It uses bubble sort to sort the array but it relies on a function [`compareDates()`](#comparedates) to compare dates. 
 
 The way it works is by taking to dates it returns true if the first date is later than the second one else it returns false. It compares the two years if they doesn't match then it returns true. If the year matches and months don't then it returns true. Finally if the year and month are the same and day don't match then it returns true else it returns false as the second date is smaller than or equal the first.
 
 > You can find sample runs for this function in [Print](#print-1) section above
-
+> Note: You can click on the name of the helping functions for more information.
 #### Code:
 ```C
 bool compareDates(BirthDate date1, BirthDate date2)
@@ -810,7 +806,7 @@ void printOneContact(Contact arr[], int index)
 ```
 
 #### modifyContact
-This fuction modifies all the information of an existing contact. The new date of birth, phone, and email will be validated using the [validDate](#validdate), [validPhone](#validphone), and [validEmail](#validemail) respectively.
+This fuction modifies all the information of an existing contact. The new date of birth, phone, and email will be validated using the [`validDate()`](#validdate), [`validPhone()`](#validphone), and [`validEmail()`](#validemail) respectively.
 ##### Code:
 ```C
 void modifyContact(int index)
@@ -976,7 +972,7 @@ bool validEmail(char email[])
 ```
 
 #### compareNames
-This function is the helping function of the built-in qsort() function that is used in [Sort by last name](#sort-by-last-name) function. It compares two names and returns an integer value less than zero if the first name is less than second name, returns zero if both names are equal, or returns an integer value more than zero if the first name is greater than second name.
+This function is the helping function of the built-in qsort() function that is used in [`sortByLastName()`](#sort-by-last-name) function. It compares two names and returns an integer value less than zero if the first name is less than second name, returns zero if both names are equal, or returns an integer value more than zero if the first name is greater than second name.
 ##### Code:
 ```C
 int compareNames(const void *pa, const void *pb)
@@ -988,7 +984,7 @@ int compareNames(const void *pa, const void *pb)
 ```
 
 #### compareDates
-This function is used in [Sort by date](#sort-by-date). It compares two dates and determines which date is before the other. It returns **true** if the second date is before the first date, or returns **false** if both dates are equal or if the second date is after the first date.
+This function is used in [`sortByDate()`](#sort-by-date). It compares two dates and determines which date is before the other. It returns **true** if the second date is before the first date, or returns **false** if both dates are equal or if the second date is after the first date.
 ##### Codes:
 ```C
 bool compareDates(BirthDate date1, BirthDate date2)
