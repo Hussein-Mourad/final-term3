@@ -301,7 +301,7 @@ void query()
 
 ### Add
 This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact. When the contact is added successfully it asks the user if he wants to add another one.If yes, the fuction will call itself.
-It validates the user input. It keeps asking the user if he enters invalid input. It uses for that three helping functions  [`validDate()`](#valid-date), [`validEmail()`](#valid-email), and [`validPhone()`](#valid-phone). 
+It validates the user input. It keeps asking the user if he enters invalid input. It uses for that three helping functions  [`validDate()`](#validdate), [`validEmail()`](#validemail), and [`validPhone()`](#validphone). 
 
 > Note: You can click on any of the helping functions for more information.
 #### Code:
