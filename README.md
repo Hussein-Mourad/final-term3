@@ -358,7 +358,7 @@ void add()
 
 ### Delete
 This function asks the user for the last and first name of the contact he wants to delete and delete all matching contacts. It achieves that by copying all the contacts that won't be deleted into a new array of contacts and updates the main global array of contacts and the global count for contacts.
-In addition, it prints deleted contact(s) so the user can get good indication that the contact is deleted. It gets help from [`printContacts()`](#printContact) function which prints all the contacts in the array. Also it gives error if the contact is not found.
+In addition, it prints deleted contact(s) so the user can get good indication that the contact is deleted. It gets help from [`printContacts()`](#printContacts) function which prints all the contacts in the array. Also it gives error if the contact is not found.
 > Note: You can click on the function name to reference it.
 #### Code:
 ```C
@@ -415,7 +415,7 @@ In case of the contact not found:
 ![Delete](img/delete2.png)
 
 ### Modify
-This function asks the user for the last name of the contact he/she wants to modify and searches for it. It achieves that by looping through all contacts and saving the indices of matching contacts in an array of type integer. If the number of items in the array is one, it calls [`modifyContact`](#modifyContact) and lets the user modify the contact directly plus prints that contact's new information. But if the number of items in the array is more than one, a menu having all the contacts that matched last name will be displayed and the user can choose the contact to be modified. Then the user will be asked to enter the number corressponding to the contact he/she wants to modify from that menu. If a contact is successfully specidied, the [`modifyContact`](#modifyContact) function will be called. [`modifyContact`](#modifyContact) is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages. If no contact is specified, **item not found** message if displayed and the function ends and no contact is modified.
+This function asks the user for the last name of the contact he/she wants to modify and searches for it. It achieves that by looping through all contacts and saving the indices of matching contacts in an array of type integer. If the number of items in the array is one, it calls [`modifyContact()`](#modifyContact) and lets the user modify the contact directly plus prints that contact's new information. But if the number of items in the array is more than one, a menu having all the contacts that matched last name will be displayed and the user can choose the contact to be modified. Then the user will be asked to enter the number corressponding to the contact he/she wants to modify from that menu. If a contact is successfully specidied, the [`modifyContact()`](#modifyContact) function will be called. [`modifyContact()`](#modifyContact) is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages. If no contact is specified, **item not found** message if displayed and the function ends and no contact is modified.
 
 #### Code:
 ```C
@@ -488,7 +488,7 @@ In case that contact not found:
 
 ### Print
 It prints a menu where the user can choose from printing contacts normally, sorted by last name, or sorted by date of birth. It validates user input.
-It achieves that by defining a 2d array which holds menu items so we can easily loop through them. Then according to the user input it calls the appropriate helping function. [`printContaxts()`](#print-contacts), [`sortByLastName()`](#sort-by-last-name) or [`sortByDate()`](#sort-by-date)
+It achieves that by defining a 2d array which holds menu items so we can easily loop through them. Then according to the user input it calls the appropriate helping function. [`printContaxts()`](#printcontacts), [`sortByLastName()`](#sort-by-last-name) or [`sortByDate()`](#sort-by-date)
 > Note: You can click on the function name to reference it.
 
 #### Code:
