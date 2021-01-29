@@ -239,11 +239,11 @@ void menu()
 }
 ```
 #### Sample Runs:
-![code-run](img/menu1.png "Code Run")
+![code-run](report/img/menu1.png "Code Run")
 
 **Error Handling in Menu**
 
-![code-run](img/menu2.png "Code Run")
+![code-run](report/img/menu2.png "Code Run")
 
 ### Load
 This functions reads all the contacts from a file and stores them in a global array of type Contact. 
@@ -303,15 +303,15 @@ void query()
 ```
 #### Sample Run:
 
-![Query sample run](img/query1.png "Query sample run")
+![Query sample run](report/img/query1.png "Query sample run")
 
 Multiple Cases:
 
-![Query sample run](img/query3.png "Query sample run")
+![Query sample run](report/img/query3.png "Query sample run")
 
 Error:
 
-![Query sample run](img/query2.png "Query sample run")
+![Query sample run](report/img/query2.png "Query sample run")
 
 ### Add
 This Function adds a contact to the phone book. It asks the user for the last name, first name, date of birth formatted as (dd-mm-yyyy), address, phone number, and email address of that new contact. When the contact is added successfully it asks the user if he wants to add another one.If yes, the function will call itself.
@@ -368,7 +368,7 @@ void add()
 
 **Handing various errors**
 
-![add sample run](img/add.png)
+![add sample run](report/img/add.png)
 
 ### Delete
 This function asks the user for the last and first name of the contact he wants to delete and delete all matching contacts. It achieves that by copying all the contacts that won't be deleted into a new array of contacts and updates the main global array of contacts and the global count for contacts.
@@ -422,11 +422,11 @@ void deleteContact()
 ```
 #### Sample Runs:
 
-![Delete](img/delete1.png)
+![Delete](report/img/delete1.png)
 
 In case of the contact not found:
 
-![Delete](img/delete2.png)
+![Delete](report/img/delete2.png)
 
 ### Modify
 This function asks the user for the last name of the contact he/she wants to modify and searches for it. It achieves that by looping through all contacts and saving the indices of matching contacts in an array of type integer. If the number of items in the array is one, it calls [`modifyContact()`](#modifyContact) and lets the user modify the contact directly plus prints that contact's new information. But if the number of items in the array is more than one, a menu having all the contacts that matched last name will be displayed and the user can choose the contact to be modified. Then the user will be asked to enter the number corressponding to the contact he/she wants to modify from that menu. If a contact is successfully specified, the [`modifyContact()`](#modifyContact) function will be called. [`modifyContact()`](#modifyContact) is very similar to add function but with slight change so it can make it easier to modify contacts and display success messages. If no contact is specified, **item not found** message if displayed and the function ends and no contact is modified.
@@ -490,15 +490,15 @@ void modify()
 
 In case of one result:
 
-![Modify](img/modify1.png)
+![Modify](report/img/modify1.png)
 
 In case of multiple results:
 
-![Modify](img/modify2.png)
+![Modify](report/img/modify2.png)
 
 In case that contact not found:
 
-![Modify](img/modify3.png)
+![Modify](report/img/modify3.png)
 
 ### Print
 It prints a menu where the user can choose from printing contacts normally, sorted by last name, or sorted by date of birth. It validates user input.
@@ -542,19 +542,19 @@ void printMenu()
 #### Sample Run:
 **Normal**
 
-![print sample run](img/print1.png)
+![print sample run](report/img/print1.png)
 
 **Sorted by Last Name**
 
-![print sample run](img/print2.png)
+![print sample run](report/img/print2.png)
 
 **Sorted by Date of Birth**
 
-![print sample run](img/print3.png)
+![print sample run](report/img/print3.png)
 
 **Error Handling**
 
-![print sample run](img/printError.png)
+![print sample run](report/img/printError.png)
 
 
 ### Save
@@ -654,16 +654,16 @@ void quit()
 #### Sample Runs:
 In Case of no changes are made:
 
-![print sample run](img/quit1.png)
+![print sample run](report/img/quit1.png)
 
 In Case of changes:
 
-![print sample run](img/quit2.png)
+![print sample run](report/img/quit2.png)
 
 
 In Case of invalid input
 
-![print sample run](img/quit3.png)
+![print sample run](report/img/quit3.png)
 
 ### Sort by last name
 
@@ -744,7 +744,7 @@ void error(char message[])
 ```
 #### Sample Run:
 
-![Error](img/errorImg.png)
+![Error](report/img/errorImg.png)
 
 ### success
 It prints green colored text which is used in printing success messages.
@@ -757,7 +757,7 @@ void success(char message[])
 }
 ```
 #### Sample Runs:
-![succes message](img/success.png)
+![succes message](report/img/success.png)
 
 ### pause
 This function asks the user for input. It is used after showing outputs to pause the program so the user can have time to read the output. If not used, the user won't be able to read the changes he/she made since the `menu()` function will clear the screen immediately.
@@ -772,7 +772,7 @@ void pause()
 }
 ```
 #### Sample Runs:
-![pause](img/pause.png)
+![pause](report/img/pause.png)
 
 ### getCurrentYear
 This function returns the current year which helps in validating date input. It uses time.h to get the current year.
@@ -817,7 +817,7 @@ void printContacts(Contact arr[], int size)
 ```
 
 #### Sample Run:
-![print](img/printContacts.png)
+![print](report/img/printContacts.png)
 
 ### printOneContact
 This function prints an element of an array of type Contact. The integer **index** specifies that element.
