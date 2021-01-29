@@ -59,8 +59,13 @@
       - [Code](#code-15)
     - [printContacts](#printcontacts)
       - [Code](#code-16)
-
-
+    - [printOneContact](#printonecontact)
+      - [Code](#code-17)
+    - [modifyContact](#modifycontact)
+      - [Code](#code-18)
+    - [validDate](#validdate)
+      - [Code](#code-19)
+      
 
 ## User Guide
 
