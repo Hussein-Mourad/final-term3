@@ -13,6 +13,7 @@
 ## Contents:
 
 - [Phone Book App](#phone-book-app)
+  - [Made By:](#made-by)
   - [Contents:](#contents)
   - [User Guide](#user-guide)
     - [Starting the program](#starting-the-program)
@@ -61,6 +62,7 @@
     - [Utility functions:](#utility-functions)
       - [error](#error)
         - [Code:](#code-12)
+        - [Sample Run:](#sample-run-2)
       - [success](#success)
         - [Code:](#code-13)
       - [pause](#pause)
@@ -545,7 +547,7 @@ void printMenu()
 
 ### Save
 This function saves all the information of all the contacts in a file. It achieves that by writing all what is inside the global array of Contacts into the same file used in `load()` function.
-### Code:
+#### Code:
 ```C
 void save()
 {
@@ -725,9 +727,12 @@ void error(char message[])
     printf("\033[1;31m%s\033[0m", message);
 }
 ```
+##### Sample Run:
+
 
 #### success
 It prints green colored text which is used in printing success messages.
+
 ##### Code:
 ```C
 void success(char message[])
@@ -806,7 +811,8 @@ void printOneContact(Contact arr[], int index)
 ```
 
 #### modifyContact
-This fuction modifies all the information of an existing contact. The new date of birth, phone, and email will be validated using the [`validDate()`](#validdate), [`validPhone()`](#validphone), and [`validEmail()`](#validemail) respectively.
+This function modifies all the information of an existing contact. The new date of birth, phone, and email will be validated using the [`validDate()`](#validdate), [`validPhone()`](#validphone), and [`validEmail()`](#validemail) respectively.
+
 ##### Code:
 ```C
 void modifyContact(int index)
@@ -845,7 +851,7 @@ void modifyContact(int index)
 ```
 
 #### validDate
-This fuction validates the date. First it checks that the day is from 1 to 31, month is from 1 to 12, and year is from 1900 to current year. If no, it stops immediately and an **invalid date** message is displayed and the function returns **false**. If yes, it continues and checks all the cases for which the date is invalid.Examples of invalid dates are 29-2-2001, 30-2-2000, 31-4-2001, and 31-5-2111. If the entered date matched any of those cases for which the date is invalid, then the checking stops immediately and an **invalid date** message is displayed and the function returns **false**. However, if the entered date didn't match any of those cases then the date is valid and is stored successfully and the function returns **true**.
+This function validates the date. First it checks that the day is from 1 to 31, month is from 1 to 12, and year is from 1900 to current year. If no, it stops immediately and an **invalid date** message is displayed and the function returns **false**. If yes, it continues and checks all the cases for which the date is invalid.Examples of invalid dates are 29-2-2001, 30-2-2000, 31-4-2001, and 31-5-2111. If the entered date matched any of those cases for which the date is invalid, then the checking stops immediately and an **invalid date** message is displayed and the function returns **false**. However, if the entered date didn't match any of those cases then the date is valid and is stored successfully and the function returns **true**.
 ##### Code:
 ```C
 bool validDate(char date[], int count)
@@ -948,6 +954,7 @@ bool validPhone(char num[])
 
 #### validEmail
 This function validates the entered email. The entered email must be on the form **name@domain.com**. If not, an **invalid email** message is displayed and the function returns **false**. Else, the email is successfully stored and the function returns **true**.
+
 ##### Code:
 ```C
 bool validEmail(char email[])
@@ -973,6 +980,7 @@ bool validEmail(char email[])
 
 #### compareNames
 This function is the helping function of the built-in qsort() function that is used in [`sortByLastName()`](#sort-by-last-name) function. It compares two names and returns an integer value less than zero if the first name is less than second name, returns zero if both names are equal, or returns an integer value more than zero if the first name is greater than second name.
+
 ##### Code:
 ```C
 int compareNames(const void *pa, const void *pb)
