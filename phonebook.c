@@ -108,22 +108,13 @@ void query()
     {
         if (strcmp(searchTerm, contacts[i].lastName) == 0)
         {
-            printf("%s, ", contacts[i].lastName);
-            printf("%s, ", contacts[i].firstName);
-            printf("%d-%d-%d, ",
-                   contacts[i].date.day,
-                   contacts[i].date.month,
-                   contacts[i].date.year);
-            printf("%s, ", contacts[i].address);
-            printf("%s, ", contacts[i].number);
-            printf("%s\n", contacts[i].email);
+            printOneContact(contacts, i);
             found = true;
         }
     }
     if (!found)
-    {
         error("Person not found!\n");
-    }
+    
 }
 
 void add()
