@@ -71,7 +71,7 @@ You can start the program by double clicking on the program icon or by entering 
 When you start the program you get a menu which helps in navigating the program. You need to enter the number corresponding to the option you want to choose for example if you enter the number 1 then you choose the Query option.
 
 ### Query
-You need to enter the last name of the person you are searching for and the program will show all contacts matching that name.
+You need to enter the last name of the person you are searching for and the program will show all contacts matching those names.
 
 ### Add
 You need to enter the last name, first name, birth date formatted as (dd-mm-yyyy), address, phone number, and the email of the contact you want to add. You need to enter valid input as the program will keep asking for input until you enter a valid one.
@@ -80,10 +80,10 @@ You need to enter the last name, first name, birth date formatted as (dd-mm-yyyy
 You need to enter the last name then the first name of the contact you want to delete and the program will delete all contacts matching that name.
 
 ### Modify 
-You need to enter the last name of the contact you want to modify. In case that there are multiple contacts will the same last name you are prompted to choose one of them from a menu by entering the number corresponding to the contact then you need to enter the new information of the contact. You need to enter valid input as the program will keep asking for input until you enter a valid one.
+You need to enter the last name of the contact you want to modify. In case that there are multiple contacts with the same last name you are prompted to choose one of them from a menu by entering the number corresponding to that contact. Then you need to enter the new information of the contact. You need to enter valid input as the program will keep asking for input until you enter a valid one.
 
 ### Print
-You need to choose how the contacts are printed whether printed normally, sorted by last name, or sorted by date of birth. You can choose by entering the number corresponding to the option you want to choose. then the program prints all the contacts you have at the moment. If you saved after printing then the contacts' sort state is saved.
+You need to choose how the contacts are printed whether printed normally, sorted by last name, or sorted by date of birth. You can choose by entering the number corresponding to the option you want to choose. Then the program prints all the contacts you have at the moment. If you saved after printing then the contacts' sort state is saved.
 
 ### About
 This option prints the name and the id of all contributors to this software.
